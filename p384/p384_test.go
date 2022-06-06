@@ -21,7 +21,7 @@ func TestParsePrivateKeyP384(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := rome.ParsePrivate(p)
+	priv, err := rome.ParseECPrivate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +55,7 @@ func TestParsePubVerify(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	p, err := rome.ParsePublic(pub)
+	p, err := rome.ParseECPublic(pub)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -18,7 +18,7 @@ func TestParsePublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub1, err := rome.ParsePublic(pub)
+	pub1, err := rome.ParseECPublic(pub)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestParseASN1PublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub1, err := rome.ParsePublicASN1(pub)
+	pub1, err := rome.ParseECPublicASN1(pub)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := rome.ParsePrivate(p)
+	priv, err := rome.ParseECPrivate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,7 +90,7 @@ func TestParseASN1PrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := rome.ParsePrivateASN1(pub)
+	priv, err := rome.ParseECPrivateASN1(pub)
 	if err != nil {
 		t.Fatal(err)
 	}

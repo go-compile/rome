@@ -104,8 +104,8 @@ func (k *ECPublicKey) Verify(digest []byte, signature []byte) (bool, error) {
 	return ecdsa.VerifyASN1(k.ecdsa, digest, signature), nil
 }
 
-// ParsePublic will read elliptic curve public key from PEM ASN.1 DER format
-func ParsePublic(public []byte) (*ECPublicKey, error) {
+// ParseECPublic will read elliptic curve public key from PEM ASN.1 DER format
+func ParseECPublic(public []byte) (*ECPublicKey, error) {
 	b, _ := pem.Decode(public)
 	if b.Type != "EC PUBLIC KEY" {
 		return nil, ErrWrongKey
@@ -126,8 +126,8 @@ func ParsePublic(public []byte) (*ECPublicKey, error) {
 	}, nil
 }
 
-// ParsePublicASN1 will read a elliptic curve public key from ASN.1 DER format
-func ParsePublicASN1(der []byte) (*ECPublicKey, error) {
+// ParseECPublicASN1 will read a elliptic curve public key from ASN.1 DER format
+func ParseECPublicASN1(der []byte) (*ECPublicKey, error) {
 	pub, err := x509.ParsePKIXPublicKey(der)
 	if err != nil {
 		return nil, err
@@ -143,8 +143,8 @@ func ParsePublicASN1(der []byte) (*ECPublicKey, error) {
 	}, nil
 }
 
-// ParsePrivate will read a PEM ASN.1 DER encoded key
-func ParsePrivate(private []byte) (*ECKey, error) {
+// ParseECPrivate will read a PEM ASN.1 DER encoded key
+func ParseECPrivate(private []byte) (*ECKey, error) {
 	b, _ := pem.Decode(private)
 	if b.Type != "EC PRIVATE KEY" {
 		return nil, ErrWrongKey
@@ -164,8 +164,8 @@ func ParsePrivate(private []byte) (*ECKey, error) {
 	}, nil
 }
 
-// ParsePrivateASN1 will read a ASN.1 DER encoded key
-func ParsePrivateASN1(private []byte) (*ECKey, error) {
+// ParseECPrivateASN1 will read a ASN.1 DER encoded key
+func ParseECPrivateASN1(private []byte) (*ECKey, error) {
 	priv, err := x509.ParseECPrivateKey(private)
 	if err != nil {
 		return nil, err
