@@ -2,6 +2,10 @@
 
 The Elliptic and Edward Curve cryptography library built for multi-curve use.
 
+# WARNING UNDER ACTIVE DEVELOPMENT!
+
+Please wait for a stable release before using.
+
 # Curves
 
 - nist P-521
@@ -40,6 +44,5 @@ More to come...
 
 - ECIES: nist curves, Curve25519, Curve448
 - ECDH
-- Ed25519
 - Maybe RSA
 - secp256k1
