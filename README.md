@@ -19,9 +19,25 @@ More to come...
 - Sign (ASN.1 format)
 - Verify
 
+<div align=center>
+
+> Implemented Curves & Features
+
+| Curve             |      Type      | Sign | Verify | Encrypt | DH  |
+| :---------------- | :------------: | :--: | :----: | :-----: | :-: |
+| Nist P-521        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
+| Nist P-384        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
+| Nist P-256        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
+| Nist P-224        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
+| Ed25519           |  Edward Curve  |  ✔   |   ✔    |    ✖    |  ✖  |
+| x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+| x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+
+</div>
+
 # Todo
 
-- ECIES
+- ECIES: nist curves, Curve25519, Curve448
 - ECDH
 - Ed25519
 - Maybe RSA
