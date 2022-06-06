@@ -46,7 +46,7 @@ func Generate() (*Key, error) {
 }
 
 // Public returns the public key interface
-func (k *Key) Public() *PublicKey {
+func (k *Key) Public() rome.PublicKey {
 	return k.pub
 }
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/go-compile/rome"
 	"github.com/go-compile/rome/p521"
 )
 
@@ -13,10 +14,10 @@ func TestECDSAP521(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub, err := key.Public().Key()
-	if err != nil {
-		t.Fatal(err)
-	}
+	var priv rome.PrivateKey
+	priv = key
 
-	fmt.Printf("%s\n", string(pub))
+	k, _ := priv.Public().Key()
+	fmt.Println(string(k))
+
 }
