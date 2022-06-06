@@ -1,7 +1,7 @@
 package p521_test
 
 import (
-	"fmt"
+	"bytes"
 	"testing"
 
 	"github.com/go-compile/rome/p521"
@@ -23,5 +23,34 @@ func TestParsePublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	fmt.Println(pub1)
+	x, y := pub1.Points()
+	x1, y1 := key.Public.Points()
+
+	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
+		t.Fatal("points don't match")
+	}
+}
+
+func TestParseASN1PublicKey(t *testing.T) {
+	key, err := p521.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	pub, err := key.Public.PublicASN1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	pub1, err := p521.ParsePublicASN1(pub)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	x, y := pub1.Points()
+	x1, y1 := key.Public.Points()
+
+	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
+		t.Fatal("points don't match")
+	}
 }
