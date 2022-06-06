@@ -5,6 +5,7 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use.
 # Curves
 
 - nist P-521
+- nist P-384
 - nist P-256
 - nist P-224
 
