@@ -18,3 +18,11 @@ More to come...
 - Import (Public, Private) PEM **and** ASN.1 DER bytes
 - Sign (ASN.1 format)
 - Verify
+
+# Todo
+
+- ECIES
+- ECDH
+- Ed25519
+- Maybe RSA
+- secp256k1
