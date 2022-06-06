@@ -61,12 +61,12 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub, err := key.Private()
+	p, err := key.Private()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	priv, err := nist.ParsePrivate(pub)
+	priv, err := nist.ParsePrivate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
