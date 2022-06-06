@@ -1,14 +1,14 @@
-package p521_test
+package nist_test
 
 import (
 	"bytes"
 	"testing"
 
-	"github.com/go-compile/rome/p521"
+	"github.com/go-compile/rome/nist"
 )
 
 func TestParsePublicKey(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func TestParsePublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub1, err := p521.ParsePublic(pub)
+	pub1, err := nist.ParsePublic(pub)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestParsePublicKey(t *testing.T) {
 }
 
 func TestParseASN1PublicKey(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestParseASN1PublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub1, err := p521.ParsePublicASN1(pub)
+	pub1, err := nist.ParsePublicASN1(pub)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -56,7 +56,7 @@ func TestParseASN1PublicKey(t *testing.T) {
 }
 
 func TestParsePrivateKey(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := p521.ParsePrivate(pub)
+	priv, err := nist.ParsePrivate(pub)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestParsePrivateKey(t *testing.T) {
 }
 
 func TestParseASN1PrivateKey(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,7 +90,7 @@ func TestParseASN1PrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := p521.ParsePrivateASN1(pub)
+	priv, err := nist.ParsePrivateASN1(pub)
 	if err != nil {
 		t.Fatal(err)
 	}

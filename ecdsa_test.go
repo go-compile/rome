@@ -1,7 +1,6 @@
 package rome_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/go-compile/rome"
@@ -17,7 +16,8 @@ func TestECDSAP521(t *testing.T) {
 	var priv rome.PrivateKey
 	priv = key
 
-	k, _ := priv.Public().Key()
-	fmt.Println(string(k))
-
+	_, err = priv.Public().Key()
+	if err != nil {
+		t.Fatal(err)
+	}
 }

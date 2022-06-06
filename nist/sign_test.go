@@ -1,14 +1,12 @@
-package p521_test
+package nist_test
 
 import (
 	"crypto/sha256"
 	"testing"
-
-	"github.com/go-compile/rome/p521"
 )
 
 func TestSign(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +32,7 @@ func TestSign(t *testing.T) {
 }
 
 func TestSignFail(t *testing.T) {
-	key, err := p521.Generate()
+	key, err := generate()
 	if err != nil {
 		t.Fatal(err)
 	}

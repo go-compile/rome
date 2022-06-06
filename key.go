@@ -45,7 +45,3 @@ type PublicKey interface {
 	// KeyASN1 returns the public key formatted in ASN.1
 	KeyASN1() ([]byte, error)
 }
-
-type Encrypt interface {
-	AES(m []byte, k []byte) ([]byte, error)
-}

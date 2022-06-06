@@ -1,8 +1,7 @@
-package p521
+package nist
 
 import (
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/x509"
 	"encoding/pem"
@@ -11,7 +10,7 @@ import (
 	"github.com/go-compile/rome"
 )
 
-// Key is a nist-P521 Elliptic Curve
+// Key is a nist Elliptic Curve
 type Key struct {
 	priv []byte
 
@@ -24,25 +23,11 @@ type PublicKey struct {
 	ecdsa *ecdsa.PublicKey
 }
 
-// Generate will create a new nist-P521 elliptic curve public/private key pair
-func Generate() (*Key, error) {
-	priv, x, y, err := elliptic.GenerateKey(elliptic.P521(), rand.Reader)
-	if err != nil {
-		return nil, err
-	}
-
-	pub := ecdsa.PublicKey{
-		Curve: elliptic.P521(),
-		X:     x,
-		Y:     y,
-	}
-
-	return &Key{priv: priv, ecdsa: &ecdsa.PrivateKey{
-		D:         new(big.Int).SetBytes(priv),
-		PublicKey: pub,
-	},
-		pub: &PublicKey{ecdsa: &pub},
-	}, nil
+// NewCurve takes a ECDSA key and converts it to a Rome private key
+func NewCurve(priv *ecdsa.PrivateKey) *Key {
+	return &Key{priv: priv.D.Bytes(), ecdsa: priv, pub: &PublicKey{
+		ecdsa: &priv.PublicKey,
+	}}
 }
 
 // Public returns the public key interface
@@ -121,7 +106,7 @@ func (k *PublicKey) Verify(digest []byte, signature []byte) (bool, error) {
 	return ecdsa.VerifyASN1(k.ecdsa, digest, signature), nil
 }
 
-// ParsePublic will read a nist-P521 public key from PEM ASN.1 DER format
+// ParsePublic will read elliptic curve public key from PEM ASN.1 DER format
 func ParsePublic(public []byte) (*PublicKey, error) {
 	b, _ := pem.Decode(public)
 	if b.Type != "EC PUBLIC KEY" {
@@ -143,7 +128,7 @@ func ParsePublic(public []byte) (*PublicKey, error) {
 	}, nil
 }
 
-// ParsePublicASN1 will read a nist-P521 public key from ASN.1 DER format
+// ParsePublicASN1 will read a elliptic curve public key from ASN.1 DER format
 func ParsePublicASN1(der []byte) (*PublicKey, error) {
 	pub, err := x509.ParsePKIXPublicKey(der)
 	if err != nil {
@@ -160,7 +145,7 @@ func ParsePublicASN1(der []byte) (*PublicKey, error) {
 	}, nil
 }
 
-// ParsePrivate will read a PEM ASN.1 DER encoded P521 key
+// ParsePrivate will read a PEM ASN.1 DER encoded key
 func ParsePrivate(private []byte) (*Key, error) {
 	b, _ := pem.Decode(private)
 	if b.Type != "EC PRIVATE KEY" {
@@ -181,7 +166,7 @@ func ParsePrivate(private []byte) (*Key, error) {
 	}, nil
 }
 
-// ParsePrivateASN1 will read a ASN.1 DER encoded P521 key
+// ParsePrivateASN1 will read a ASN.1 DER encoded key
 func ParsePrivateASN1(private []byte) (*Key, error) {
 	priv, err := x509.ParseECPrivateKey(private)
 	if err != nil {
