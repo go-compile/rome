@@ -54,3 +54,27 @@ func TestParseASN1PublicKey(t *testing.T) {
 		t.Fatal("points don't match")
 	}
 }
+
+func TestParseASN1PrivateKey(t *testing.T) {
+	key, err := p521.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	pub, err := key.PrivateASN1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	priv, err := p521.ParsePrivateASN1(pub)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	x, y := priv.Public.Points()
+	x1, y1 := key.Public.Points()
+
+	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
+		t.Fatal("points don't match")
+	}
+}

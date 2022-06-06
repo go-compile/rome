@@ -183,6 +183,9 @@ func ParsePrivateASN1(private []byte) (*Key, error) {
 
 	return &Key{
 		ecdsa: priv,
-		priv:  priv.D.Bytes(),
+		Public: &PublicKey{
+			ecdsa: &priv.PublicKey,
+		},
+		priv: priv.D.Bytes(),
 	}, nil
 }
