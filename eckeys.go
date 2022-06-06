@@ -2,7 +2,6 @@ package rome
 
 import (
 	"crypto/ecdsa"
-	"crypto/rand"
 	"crypto/x509"
 	"encoding/pem"
 	"math/big"
@@ -31,13 +30,6 @@ func NewECCurve(priv *ecdsa.PrivateKey) *ECKey {
 // Public returns the public key interface
 func (k *ECKey) Public() PublicKey {
 	return k.pub
-}
-
-// Sign will take a digest and use the private key to sign it
-func (k *ECKey) Sign(digest []byte) ([]byte, error) {
-	// using go's ECDSA tried and tested implementation for
-	// security and performance
-	return ecdsa.SignASN1(rand.Reader, k.ecdsa, digest)
 }
 
 // Private will return the private key as PEM ASN.1 DER bytes
@@ -97,11 +89,6 @@ func (k *ECPublicKey) Points() (x *big.Int, y *big.Int) {
 	y = &*k.ecdsa.Y
 
 	return x, y
-}
-
-// Verify will take a ASN.1 signature and return true if it's valid
-func (k *ECPublicKey) Verify(digest []byte, signature []byte) (bool, error) {
-	return ecdsa.VerifyASN1(k.ecdsa, digest, signature), nil
 }
 
 // ParseECPublic will read elliptic curve public key from PEM ASN.1 DER format
