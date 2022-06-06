@@ -1,16 +1,29 @@
-package p521
+package rome
 
 import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
 	"math/big"
-
-	"github.com/go-compile/rome"
+	"testing"
 )
 
+func TestParsePoints(t *testing.T) {
+	key, err := generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	x, y := key.Public().Points()
+
+	// compare pointers and make sure they don't match
+	if &key.ecdsa.X == &x || &key.ecdsa.Y == &y {
+		t.Fatal("curve points did not clone")
+	}
+}
+
 // Generate will create a new nist-P521 elliptic curve public/private key pair
-func Generate() (*rome.ECKey, error) {
+func generate() (*ECKey, error) {
 	d, x, y, err := elliptic.GenerateKey(elliptic.P521(), rand.Reader)
 	if err != nil {
 		return nil, err
@@ -25,5 +38,5 @@ func Generate() (*rome.ECKey, error) {
 		},
 	}
 
-	return rome.NewECCurve(private), nil
+	return NewECCurve(private), nil
 }

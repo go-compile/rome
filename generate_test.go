@@ -1,4 +1,4 @@
-package p384
+package rome_test
 
 import (
 	"crypto/ecdsa"
@@ -9,9 +9,9 @@ import (
 	"github.com/go-compile/rome"
 )
 
-// Generate will create a new nist-P256 elliptic curve public/private key pair
-func Generate() (*rome.ECKey, error) {
-	d, x, y, err := elliptic.GenerateKey(elliptic.P384(), rand.Reader)
+// Generate will create a new nist-P521 elliptic curve public/private key pair
+func generate() (*rome.ECKey, error) {
+	d, x, y, err := elliptic.GenerateKey(elliptic.P521(), rand.Reader)
 	if err != nil {
 		return nil, err
 	}
@@ -19,7 +19,7 @@ func Generate() (*rome.ECKey, error) {
 	private := &ecdsa.PrivateKey{
 		D: new(big.Int).SetBytes(d),
 		PublicKey: ecdsa.PublicKey{
-			Curve: elliptic.P384(),
+			Curve: elliptic.P521(),
 			X:     x,
 			Y:     y,
 		},

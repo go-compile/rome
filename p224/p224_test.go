@@ -5,7 +5,8 @@ import (
 	"crypto/sha256"
 	"testing"
 
-	"github.com/go-compile/rome/nist"
+	"github.com/go-compile/rome"
+
 	"github.com/go-compile/rome/p224"
 )
 
@@ -20,7 +21,7 @@ func TestParsePrivateKeyP224(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	priv, err := nist.ParsePrivate(p)
+	priv, err := rome.ParsePrivate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +55,7 @@ func TestParsePubVerify(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	p, err := nist.ParsePublic(pub)
+	p, err := rome.ParsePublic(pub)
 	if err != nil {
 		t.Fatal(err)
 	}

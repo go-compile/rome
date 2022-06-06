@@ -6,11 +6,11 @@ import (
 	"crypto/rand"
 	"math/big"
 
-	"github.com/go-compile/rome/nist"
+	"github.com/go-compile/rome"
 )
 
 // Generate will create a new nist-P224 elliptic curve public/private key pair
-func Generate() (*nist.Key, error) {
+func Generate() (*rome.ECKey, error) {
 	d, x, y, err := elliptic.GenerateKey(elliptic.P224(), rand.Reader)
 	if err != nil {
 		return nil, err
@@ -28,5 +28,5 @@ func Generate() (*nist.Key, error) {
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
-	return nist.NewCurve(private), nil
+	return rome.NewECCurve(private), nil
 }
