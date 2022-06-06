@@ -13,7 +13,7 @@ func TestParsePublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub, err := key.Public.Public()
+	pub, err := key.Public().Key()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -24,7 +24,7 @@ func TestParsePublicKey(t *testing.T) {
 	}
 
 	x, y := pub1.Points()
-	x1, y1 := key.Public.Points()
+	x1, y1 := key.Public().Points()
 
 	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
 		t.Fatal("points don't match")
@@ -37,7 +37,7 @@ func TestParseASN1PublicKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub, err := key.Public.PublicASN1()
+	pub, err := key.Public().KeyASN1()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -48,7 +48,7 @@ func TestParseASN1PublicKey(t *testing.T) {
 	}
 
 	x, y := pub1.Points()
-	x1, y1 := key.Public.Points()
+	x1, y1 := key.Public().Points()
 
 	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
 		t.Fatal("points don't match")
@@ -71,8 +71,8 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	x, y := priv.Public.Points()
-	x1, y1 := key.Public.Points()
+	x, y := priv.Public().Points()
+	x1, y1 := key.Public().Points()
 
 	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
 		t.Fatal("points don't match")
@@ -95,8 +95,8 @@ func TestParseASN1PrivateKey(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	x, y := priv.Public.Points()
-	x1, y1 := key.Public.Points()
+	x, y := priv.Public().Points()
+	x1, y1 := key.Public().Points()
 
 	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
 		t.Fatal("points don't match")

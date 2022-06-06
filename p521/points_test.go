@@ -10,7 +10,7 @@ func TestParsePoints(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	x, y := key.Public.Points()
+	x, y := key.Public().Points()
 
 	// compare pointers and make sure they don't match
 	if &key.ecdsa.X == &x || &key.ecdsa.Y == &y {

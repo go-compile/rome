@@ -13,7 +13,7 @@ func TestECDSAP521(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pub, err := key.Public.Public()
+	pub, err := key.Public().Key()
 	if err != nil {
 		t.Fatal(err)
 	}

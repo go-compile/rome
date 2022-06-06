@@ -16,8 +16,7 @@ type Key struct {
 	priv []byte
 
 	ecdsa *ecdsa.PrivateKey
-
-	Public *PublicKey
+	pub   *PublicKey
 }
 
 // PublicKey holds the X and Y parameters for the key
@@ -42,8 +41,13 @@ func Generate() (*Key, error) {
 		D:         new(big.Int).SetBytes(priv),
 		PublicKey: pub,
 	},
-		Public: &PublicKey{ecdsa: &pub},
+		pub: &PublicKey{ecdsa: &pub},
 	}, nil
+}
+
+// Public returns the public key interface
+func (k *Key) Public() *PublicKey {
+	return k.pub
 }
 
 // Sign will take a digest and use the private key to sign it
@@ -78,8 +82,8 @@ func (k *Key) PrivateASN1() ([]byte, error) {
 	return der, nil
 }
 
-// Public returns the public key in PEM ASN.1 DER format
-func (k *PublicKey) Public() ([]byte, error) {
+// Key returns the public key in PEM ASN.1 DER format
+func (k *PublicKey) Key() ([]byte, error) {
 	der, err := x509.MarshalPKIXPublicKey(k.ecdsa)
 	if err != nil {
 		return nil, err
@@ -93,8 +97,8 @@ func (k *PublicKey) Public() ([]byte, error) {
 	return pem.EncodeToMemory(b), nil
 }
 
-// PublicASN1 returns the public key formatted in ASN.1
-func (k *PublicKey) PublicASN1() ([]byte, error) {
+// KeyASN1 returns the public key formatted in ASN.1
+func (k *PublicKey) KeyASN1() ([]byte, error) {
 	der, err := x509.MarshalPKIXPublicKey(k.ecdsa)
 	if err != nil {
 		return nil, err
@@ -170,7 +174,7 @@ func ParsePrivate(private []byte) (*Key, error) {
 
 	return &Key{
 		ecdsa: priv,
-		Public: &PublicKey{
+		pub: &PublicKey{
 			ecdsa: &priv.PublicKey,
 		},
 		priv: priv.D.Bytes(),
@@ -186,7 +190,7 @@ func ParsePrivateASN1(private []byte) (*Key, error) {
 
 	return &Key{
 		ecdsa: priv,
-		Public: &PublicKey{
+		pub: &PublicKey{
 			ecdsa: &priv.PublicKey,
 		},
 		priv: priv.D.Bytes(),

@@ -23,7 +23,7 @@ func TestSign(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	valid, err := key.Public.Verify(digest, sig)
+	valid, err := key.Public().Verify(digest, sig)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestSignFail(t *testing.T) {
 	// modify digest
 	digest[5] = digest[5] + 1
 
-	valid, err := key.Public.Verify(digest, sig)
+	valid, err := key.Public().Verify(digest, sig)
 	if err != nil {
 		t.Fatal(err)
 	}

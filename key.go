@@ -10,9 +10,12 @@ var (
 type PrivateKey interface {
 	// Sign returns a ASN.1 formatted signature
 	Sign(digest []byte) ([]byte, error)
+
+	Public() PublicKey
 }
 
 type PublicKey interface {
+	Verify(digest []byte, signature []byte) ([]byte, error)
 }
 
 type Encrypt interface {
