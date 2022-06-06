@@ -8,6 +8,7 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use.
 - nist P-384
 - nist P-256
 - nist P-224
+- Ed25519
 
 More to come...
 
