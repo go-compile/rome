@@ -173,3 +173,16 @@ func ParsePrivate(private []byte) (*Key, error) {
 		priv:  priv.D.Bytes(),
 	}, nil
 }
+
+// ParsePrivateASN1 will read a ASN.1 DER encoded P521 key
+func ParsePrivateASN1(private []byte) (*Key, error) {
+	priv, err := x509.ParseECPrivateKey(private)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Key{
+		ecdsa: priv,
+		priv:  priv.D.Bytes(),
+	}, nil
+}
