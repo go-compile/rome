@@ -49,6 +49,8 @@ type PrivateKey interface {
 type PublicKey interface {
 	// Name returns the curve name
 	Name() string
+	// Size returns the key size in bytes
+	Size() int
 	// Verify will take a ASN.1 signature and return true if it's valid
 	Verify(digest []byte, signature []byte) (bool, error)
 	// Points returns the Elliptic/Edward Curve coordinates

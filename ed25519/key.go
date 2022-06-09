@@ -86,6 +86,16 @@ func (k *EdPublicKey) KeyASN1() ([]byte, error) {
 	return der, nil
 }
 
+// Size returns the size of the key in bytes
+func (k *EdPublicKey) Size() int {
+	return 32
+}
+
+// Bits returns the size of the key in bits
+func (k *EdPublicKey) Bits() int {
+	return 32 * 8
+}
+
 // Points are not implemented for Edward Curves.
 // Usage will result in a panic.
 func (k *EdPublicKey) Points() (x *big.Int, y *big.Int) {

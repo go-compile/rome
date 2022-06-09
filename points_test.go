@@ -22,6 +22,18 @@ func TestParsePoints(t *testing.T) {
 	}
 }
 
+func TestECKeySize(t *testing.T) {
+	key, err := generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if size := key.Public().Size(); size != 65 {
+		t.Fatal("unexpected size:", size)
+	}
+
+}
+
 // Generate will create a new nist-P521 elliptic curve public/private key pair
 func generate() (*ECKey, error) {
 	d, x, y, err := elliptic.GenerateKey(elliptic.P521(), rand.Reader)

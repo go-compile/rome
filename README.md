@@ -59,7 +59,7 @@ package main
 import (
 	"crypto/sha256"
 	"fmt"
-    "os"
+	"os"
 
 	"github.com/go-compile/rome"
 	"github.com/go-compile/rome/p256"

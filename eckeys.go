@@ -4,6 +4,7 @@ import (
 	"crypto/ecdsa"
 	"crypto/x509"
 	"encoding/pem"
+	"math"
 	"math/big"
 )
 
@@ -46,6 +47,19 @@ func (k *ECKey) PrivateRaw() []byte {
 // Name returns the name of the curve
 func (k *ECPublicKey) Name() string {
 	return k.ecdsa.Params().Name
+}
+
+// Size returns the key size in bytes
+func (k *ECPublicKey) Size() int {
+	// convert bits to bytes and round up to full byte
+	x := math.Round(float64(k.ecdsa.Curve.Params().BitSize / 8))
+	// if even
+	if int(x)%2 == 0 {
+		return int(x)
+	}
+
+	// if odd
+	return int(x) + 1
 }
 
 // Private will return the private key as PEM ASN.1 DER bytes
