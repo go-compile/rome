@@ -26,14 +26,14 @@ More to come...
 
 <div align=center>
 
-> Implemented Curves & Features
+## Implemented Curves & Features
 
 | Curve             |      Type      | Sign | Verify | Encrypt | DH  |
 | :---------------- | :------------: | :--: | :----: | :-----: | :-: |
-| Nist P-521        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
-| Nist P-384        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
-| Nist P-256        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
-| Nist P-224        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✖  |
+| Nist P-521        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✔  |
+| Nist P-384        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✔  |
+| Nist P-256        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✔  |
+| Nist P-224        | Elliptic Curve |  ✔   |   ✔    |    ✖    |  ✔  |
 | Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
@@ -46,3 +46,4 @@ More to come...
 - ECDH
 - Maybe RSA
 - secp256k1
+- saltpack

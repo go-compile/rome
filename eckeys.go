@@ -32,6 +32,11 @@ func (k *ECKey) Public() PublicKey {
 	return k.pub
 }
 
+// PublicRaw returns the private key (D)
+func (k *ECKey) PrivateRaw() []byte {
+	return k.priv
+}
+
 // Private will return the private key as PEM ASN.1 DER bytes
 func (k *ECKey) Private() ([]byte, error) {
 	der, err := x509.MarshalECPrivateKey(k.ecdsa)

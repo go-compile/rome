@@ -2,6 +2,7 @@ package rome
 
 import (
 	"errors"
+	"hash"
 	"math/big"
 )
 
@@ -32,6 +33,10 @@ type PrivateKey interface {
 	Private() ([]byte, error)
 	// Private returns the private key as ANS.1 DER bytes
 	PrivateASN1() ([]byte, error)
+
+	// PrivateRaw if a elliptic or edwards curve the returned bytes will
+	// be the value D
+	PrivateRaw() []byte
 }
 
 // PublicKey is a Elliptic/Edward curve public key
@@ -44,4 +49,7 @@ type PublicKey interface {
 	Key() ([]byte, error)
 	// KeyASN1 returns the public key formatted in ASN.1
 	KeyASN1() ([]byte, error)
+
+	// DH takes a hasher and the ephemeral private key
+	DH(h hash.Hash, g PrivateKey) ([]byte, error)
 }
