@@ -19,6 +19,10 @@ More to come...
 - Import (Public, Private) PEM **and** ASN.1 DER bytes
 - Sign (ASN.1 format)
 - Verify
+- Elliptic Curve Diffie Hellman (ECDH)
+- Encrypt (ECIES: AES_GCM 128 & 256 bit)
+- Decrypt
+- Retrieve Points
 
 <div align=center>
 
@@ -42,6 +46,45 @@ More to come...
 - Maybe RSA
 - secp256k1
 - saltpack
+
+# Encrypt (ECIES)
+
+Rome supports ECIES for elliptic curves allowing you to encrypt to a public key. Encryption can be customised with cipher options: `AES_256_GCM` (more coming soon) and customise KDFs used for shared secret generation (ECDH). Supporting the hash.Hash interface you can use your favourite algorithm.
+
+Encrypt example with `AES_256_GCM_SHA256`:
+
+```go
+package main
+
+import (
+	"crypto/sha256"
+	"fmt"
+    "os"
+
+	"github.com/go-compile/rome"
+	"github.com/go-compile/rome/p256"
+)
+
+func main() {
+	// Generate a nist P256 Elliptic Curve
+	k, err := p256.Generate()
+	if err != nil {
+		panic(err)
+	}
+
+	pub := k.Public()
+
+	msg := []byte("Secret message.")
+
+	// encrypt message using AES256_GCM with SHA256 and a 128bit nonce
+	ciphertext, err := pub.Encrypt(msg, rome.CipherAES_GCM, sha256.New())
+	if err != nil {
+		panic(err)
+	}
+
+    fmt.Printf("%X\n", ciphertext)
+}
+```
 
 # Install
 
