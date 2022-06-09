@@ -22,6 +22,8 @@ const (
 var (
 	// ErrUnknownCipher is returned if the cipher provided is unsupported
 	ErrUnknownCipher = errors.New("unknown cipher suite")
+	// ErrCipherTxtSmall is returned if the data is so small it must be invalid
+	ErrCipherTxtSmall = errors.New("cipher text is too small")
 )
 
 // Encrypt uses ECIES hybrid encryption
@@ -103,6 +105,11 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 	secret, err := key.DH(hash, k)
 	if err != nil {
 		return nil, err
+	}
+
+	// range check length
+	if len(ciphertext) < 16 {
+		return nil, ErrCipherTxtSmall
 	}
 
 	nonce := ciphertext[:16]
