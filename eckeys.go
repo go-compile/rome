@@ -32,6 +32,12 @@ func (k *ECKey) Public() PublicKey {
 	return k.pub
 }
 
+// ECPublic returns the ECPublic interface instead of the unified rome
+// interface. It is not recommended this function is used.
+func (k *ECKey) ECPublic() *ECPublicKey {
+	return k.pub
+}
+
 // PrivateRaw returns the private key (D)
 func (k *ECKey) PrivateRaw() []byte {
 	return k.priv
