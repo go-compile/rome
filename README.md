@@ -49,7 +49,7 @@ More to come...
 
 # Encrypt (ECIES)
 
-Rome supports ECIES for elliptic curves allowing you to encrypt to a public key. Encryption can be customised with cipher options: `AES_256_GCM` (more coming soon) and customise KDFs used for shared secret generation (ECDH). Supporting the hash.Hash interface you can use your favourite algorithm.
+Rome supports ECIES for elliptic curves allowing you to encrypt to a public key. Encryption can be customised with cipher options: `AES_256_GCM` (more coming soon) and customise KDFs used for shared secret generation (ECDH). Supporting the hash.Hash interface you can use your favourite algorithm. It's even possible to use Argon2 as a KDF.
 
 Encrypt example with `AES_256_GCM_SHA256`:
 
