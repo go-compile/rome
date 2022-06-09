@@ -99,6 +99,10 @@ func (k *ECPublicKey) Points() (x *big.Int, y *big.Int) {
 // ParseECPublic will read elliptic curve public key from PEM ASN.1 DER format
 func ParseECPublic(public []byte) (*ECPublicKey, error) {
 	b, _ := pem.Decode(public)
+	if b == nil {
+		return nil, ErrInvalidPem
+	}
+
 	if b.Type != "EC PUBLIC KEY" {
 		return nil, ErrWrongKey
 	}
@@ -138,6 +142,10 @@ func ParseECPublicASN1(der []byte) (*ECPublicKey, error) {
 // ParseECPrivate will read a PEM ASN.1 DER encoded key
 func ParseECPrivate(private []byte) (*ECKey, error) {
 	b, _ := pem.Decode(private)
+	if b == nil {
+		return nil, ErrInvalidPem
+	}
+
 	if b.Type != "EC PRIVATE KEY" {
 		return nil, ErrWrongKey
 	}
