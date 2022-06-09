@@ -26,14 +26,15 @@ func (k *EdKey) Public() rome.PublicKey {
 
 // PrivateRaw returns the private bytes D
 func (k *EdKey) PrivateRaw() []byte {
-	return k.priv
+	return rome.Pad(k.priv, k.Public().Size())
 }
 
 // PublicRaw returns the public key as bytes
 func (k *EdKey) PublicRaw() []byte {
 	x := make([]byte, len(k.pub))
 	copy(x, k.pub)
-	return x
+
+	return rome.Pad(x, int(k.Public().Size()))
 }
 
 // Private will return the private key as PEM ASN.1 DER bytes
@@ -88,12 +89,12 @@ func (k *EdPublicKey) KeyASN1() ([]byte, error) {
 
 // Size returns the size of the key in bytes
 func (k *EdPublicKey) Size() int {
-	return 32
+	return 64
 }
 
 // Bits returns the size of the key in bits
 func (k *EdPublicKey) Bits() int {
-	return 32 * 8
+	return 64 * 8
 }
 
 // Points are not implemented for Edward Curves.

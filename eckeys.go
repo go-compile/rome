@@ -41,7 +41,7 @@ func (k *ECKey) ECPublic() *ECPublicKey {
 
 // PrivateRaw returns the private key (D)
 func (k *ECKey) PrivateRaw() []byte {
-	return k.priv
+	return Pad(k.priv, k.pub.Size())
 }
 
 // Name returns the name of the curve

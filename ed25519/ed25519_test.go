@@ -3,7 +3,6 @@ package ed25519_test
 import (
 	"bytes"
 	"crypto/sha256"
-	"fmt"
 	"testing"
 
 	"github.com/go-compile/rome/ed25519"
@@ -79,17 +78,4 @@ func TestParsePubVerify(t *testing.T) {
 	if !valid {
 		t.Fatal("signature was expected to be valid")
 	}
-}
-
-func TestKeySize(t *testing.T) {
-	key, err := ed25519.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	fmt.Println("Private", len(key.PrivateRaw()))
-	fmt.Println("Public", len(key.PublicRaw()))
-	x, y := key.Public().Points()
-	fmt.Println(len(x.Bytes()))
-	fmt.Println(len(y.Bytes()))
 }

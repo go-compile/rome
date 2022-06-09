@@ -28,7 +28,7 @@ func TestECKeySize(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if size := key.Public().Size(); size != 65 {
+	if size := key.Public().Size(); size != 66 {
 		t.Fatal("unexpected size:", size)
 	}
 
