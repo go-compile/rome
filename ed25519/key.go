@@ -111,3 +111,13 @@ func (k *EdPublicKey) DH(h hash.Hash, g rome.PrivateKey) ([]byte, error) {
 func (k *EdPublicKey) Name() string {
 	return "ED25519"
 }
+
+// Encrypt is not supported on Edwards Curves
+func (k *EdPublicKey) Encrypt(msg []byte, cipher rome.Cipher, hash hash.Hash) ([]byte, error) {
+	panic("ECIES is not supported on Edward Curves")
+}
+
+// Decrypt is not supported on Edwards Curves
+func (k *EdKey) Decrypt(ciphertext []byte, cipher rome.Cipher, hash hash.Hash) ([]byte, error) {
+	panic("ECIES is not supported on Edward Curves")
+}

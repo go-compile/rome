@@ -39,6 +39,10 @@ type PrivateKey interface {
 	// PrivateRaw if a elliptic or edwards curve the returned bytes will
 	// be the value D
 	PrivateRaw() []byte
+
+	// Decrypt will take a ECIES encrypted ciphertext and decrypt it using the
+	// private key
+	Decrypt(ciphertext []byte, cipher Cipher, hash hash.Hash) ([]byte, error)
 }
 
 // PublicKey is a Elliptic/Edward curve public key
@@ -53,7 +57,8 @@ type PublicKey interface {
 	Key() ([]byte, error)
 	// KeyASN1 returns the public key formatted in ASN.1
 	KeyASN1() ([]byte, error)
-
 	// DH takes a hasher and the ephemeral private key
 	DH(h hash.Hash, g PrivateKey) ([]byte, error)
+	// Encrypt will uses ECIES to encrypt your message to the public key
+	Encrypt(msg []byte, cipher Cipher, hash hash.Hash) ([]byte, error)
 }
