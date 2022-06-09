@@ -11,6 +11,10 @@ import (
 // ParseEdPublic will read edward curve public key from PEM ASN.1 DER format
 func ParseEdPublic(public []byte) (*EdPublicKey, error) {
 	b, _ := pem.Decode(public)
+	if b == nil {
+		return nil, rome.ErrInvalidPem
+	}
+
 	if b.Type != "ED PUBLIC KEY" {
 		return nil, rome.ErrWrongKey
 	}
@@ -48,6 +52,10 @@ func ParseECPublicASN1(der []byte) (*EdPublicKey, error) {
 // ParseEdPrivate will read a PEM ASN.1 DER encoded key
 func ParseEdPrivate(public, private []byte) (*EdKey, error) {
 	b, _ := pem.Decode(private)
+	if b == nil {
+		return nil, rome.ErrInvalidPem
+	}
+
 	if b.Type != "ED PRIVATE KEY" {
 		return nil, rome.ErrWrongKey
 	}
@@ -63,7 +71,10 @@ func ParseEdPrivate(public, private []byte) (*EdKey, error) {
 	}
 
 	b, _ = pem.Decode(public)
-	// TODO: check if block is nil and return invalid pem error
+	if b == nil {
+		return nil, rome.ErrInvalidPem
+	}
+
 	if b.Type != "ED PUBLIC KEY" {
 		return nil, rome.ErrWrongKey
 	}
