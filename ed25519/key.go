@@ -106,3 +106,8 @@ func (k *EdPublicKey) Verify(msg []byte, signature []byte) (bool, error) {
 func (k *EdPublicKey) DH(h hash.Hash, g rome.PrivateKey) ([]byte, error) {
 	panic("Edward Curve does not support ECDH")
 }
+
+// Name returns the name of the Edward Curve
+func (k *EdPublicKey) Name() string {
+	return "ED25519"
+}

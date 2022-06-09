@@ -43,6 +43,8 @@ type PrivateKey interface {
 
 // PublicKey is a Elliptic/Edward curve public key
 type PublicKey interface {
+	// Name returns the curve name
+	Name() string
 	// Verify will take a ASN.1 signature and return true if it's valid
 	Verify(digest []byte, signature []byte) (bool, error)
 	// Points returns the Elliptic/Edward Curve coordinates

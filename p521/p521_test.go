@@ -32,6 +32,10 @@ func TestParsePrivateKeyP521(t *testing.T) {
 	if !bytes.Equal(x.Bytes(), x1.Bytes()) || !bytes.Equal(y.Bytes(), y1.Bytes()) {
 		t.Fatal("points don't match")
 	}
+
+	if priv.Public().Name() != "P-521" {
+		t.Fatal("incorrect curve name returned")
+	}
 }
 
 func TestParsePubVerify(t *testing.T) {

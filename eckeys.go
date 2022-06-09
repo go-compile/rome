@@ -32,9 +32,14 @@ func (k *ECKey) Public() PublicKey {
 	return k.pub
 }
 
-// PublicRaw returns the private key (D)
+// PrivateRaw returns the private key (D)
 func (k *ECKey) PrivateRaw() []byte {
 	return k.priv
+}
+
+// Name returns the name of the curve
+func (k *ECPublicKey) Name() string {
+	return k.ecdsa.Params().Name
 }
 
 // Private will return the private key as PEM ASN.1 DER bytes
