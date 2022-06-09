@@ -63,4 +63,9 @@ type PublicKey interface {
 	DH(h hash.Hash, g PrivateKey) ([]byte, error)
 	// Encrypt will uses ECIES to encrypt your message to the public key
 	Encrypt(msg []byte, cipher Cipher, hash hash.Hash) ([]byte, error)
+
+	// Fingerprint returns the hashed ASN.1 digest representing this
+	// public key. This function will panic if it fails to encode the
+	// public key.
+	Fingerprint(hash.Hash) []byte
 }

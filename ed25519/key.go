@@ -132,3 +132,17 @@ func (k *EdPublicKey) Encrypt(msg []byte, cipher rome.Cipher, hash hash.Hash) ([
 func (k *EdKey) Decrypt(ciphertext []byte, cipher rome.Cipher, hash hash.Hash) ([]byte, error) {
 	panic("ECIES is not supported on Edward Curves")
 }
+
+// Fingerprint returns the hashed ASN.1 digest representing this
+// public key. This function will panic if it fails to encode the
+// public key.
+func (k *EdPublicKey) Fingerprint(h hash.Hash) []byte {
+	pub, err := k.KeyASN1()
+	if err != nil {
+		panic(err)
+	}
+
+	h.Write(pub)
+
+	return h.Sum(nil)
+}

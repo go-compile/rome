@@ -4,6 +4,7 @@ import (
 	"crypto/ecdsa"
 	"crypto/x509"
 	"encoding/pem"
+	"hash"
 	"math"
 	"math/big"
 )
@@ -203,4 +204,18 @@ func ParseECPrivateASN1(private []byte) (*ECKey, error) {
 		},
 		priv: priv.D.Bytes(),
 	}, nil
+}
+
+// Fingerprint returns the hashed ASN.1 digest representing this
+// public key. This function will panic if it fails to encode the
+// public key.
+func (k *ECPublicKey) Fingerprint(h hash.Hash) []byte {
+	pub, err := k.KeyASN1()
+	if err != nil {
+		panic(err)
+	}
+
+	h.Write(pub)
+
+	return h.Sum(nil)
 }
