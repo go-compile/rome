@@ -4,6 +4,7 @@ import (
 	"crypto/ed25519"
 	"crypto/x509"
 	"encoding/pem"
+	"hash"
 	"math/big"
 
 	"github.com/go-compile/rome"
@@ -21,6 +22,11 @@ type EdPublicKey []byte
 func (k *EdKey) Public() rome.PublicKey {
 	x := EdPublicKey(k.pub)
 	return &x
+}
+
+// PrivateRaw returns the private bytes D
+func (k *EdKey) PrivateRaw() []byte {
+	return k.priv
 }
 
 // PublicRaw returns the public key as bytes
@@ -94,4 +100,9 @@ func (k *EdKey) Sign(digest []byte) ([]byte, error) {
 // Verify will take a ASN.1 signature and return true if it's valid
 func (k *EdPublicKey) Verify(msg []byte, signature []byte) (bool, error) {
 	return ed25519.Verify(ed25519.PublicKey(*k), msg, signature), nil
+}
+
+// DH is a placeholder function to satisfy rome's Key interface.
+func (k *EdPublicKey) DH(h hash.Hash, g rome.PrivateKey) ([]byte, error) {
+	panic("Edward Curve does not support ECDH")
 }
