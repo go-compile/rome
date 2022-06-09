@@ -9,6 +9,8 @@ import (
 var (
 	// ErrWrongKey is returned if the key is the wrong type
 	ErrWrongKey = errors.New("wrong key type or curve")
+	// ErrInvalidPem is returned when invalid PEM data is attempted to be decoded
+	ErrInvalidPem = errors.New("invalid PEM data failed to parse")
 )
 
 // PrivateKey holds the D point for the curve and the public
