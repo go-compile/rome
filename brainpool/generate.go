@@ -4,8 +4,8 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 
-	"github.com/ebfe/brainpool"
 	"github.com/go-compile/rome"
+	brainpool "github.com/go-compile/rome/brainpool/bcurves"
 )
 
 // GenerateP160r will create a new Brainpool P160r elliptic curve public/private key pair

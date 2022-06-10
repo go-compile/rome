@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ebfe/brainpool"
+	brainpool "github.com/go-compile/rome/brainpool/bcurves"
 )
 
 type dsaAlgorithmParameters struct {
