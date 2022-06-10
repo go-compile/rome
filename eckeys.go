@@ -2,11 +2,12 @@ package rome
 
 import (
 	"crypto/ecdsa"
-	"crypto/x509"
 	"encoding/pem"
 	"hash"
 	"math"
 	"math/big"
+
+	"github.com/go-compile/rome/derbytes"
 )
 
 // ECKey is a Elliptic Curve
@@ -65,7 +66,7 @@ func (k *ECPublicKey) Size() int {
 
 // Private will return the private key as PEM ASN.1 DER bytes
 func (k *ECKey) Private() ([]byte, error) {
-	der, err := x509.MarshalECPrivateKey(k.ecdsa)
+	der, err := derbytes.MarshalECPrivateKey(k.ecdsa)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func (k *ECKey) Private() ([]byte, error) {
 
 // PrivateASN1 will return the private key as ASN.1 DER bytes
 func (k *ECKey) PrivateASN1() ([]byte, error) {
-	der, err := x509.MarshalECPrivateKey(k.ecdsa)
+	der, err := derbytes.MarshalECPrivateKey(k.ecdsa)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (k *ECKey) PrivateASN1() ([]byte, error) {
 
 // Key returns the public key in PEM ASN.1 DER format
 func (k *ECPublicKey) Key() ([]byte, error) {
-	der, err := x509.MarshalPKIXPublicKey(k.ecdsa)
+	der, err := derbytes.MarshalPKIXPublicKey(k.ecdsa)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (k *ECPublicKey) Key() ([]byte, error) {
 
 // KeyASN1 returns the public key formatted in ASN.1
 func (k *ECPublicKey) KeyASN1() ([]byte, error) {
-	der, err := x509.MarshalPKIXPublicKey(k.ecdsa)
+	der, err := derbytes.MarshalPKIXPublicKey(k.ecdsa)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func ParseECPublic(public []byte) (*ECPublicKey, error) {
 		return nil, ErrWrongKey
 	}
 
-	pub, err := x509.ParsePKIXPublicKey(b.Bytes)
+	pub, err := derbytes.ParsePKIXPublicKey(b.Bytes)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func ParseECPublic(public []byte) (*ECPublicKey, error) {
 
 // ParseECPublicASN1 will read a elliptic curve public key from ASN.1 DER format
 func ParseECPublicASN1(der []byte) (*ECPublicKey, error) {
-	pub, err := x509.ParsePKIXPublicKey(der)
+	pub, err := derbytes.ParsePKIXPublicKey(der)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +177,7 @@ func ParseECPrivate(private []byte) (*ECKey, error) {
 		return nil, ErrWrongKey
 	}
 
-	priv, err := x509.ParseECPrivateKey(b.Bytes)
+	priv, err := derbytes.ParseECPrivateKey(b.Bytes)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +193,7 @@ func ParseECPrivate(private []byte) (*ECKey, error) {
 
 // ParseECPrivateASN1 will read a ASN.1 DER encoded key
 func ParseECPrivateASN1(private []byte) (*ECKey, error) {
-	priv, err := x509.ParseECPrivateKey(private)
+	priv, err := derbytes.ParseECPrivateKey(private)
 	if err != nil {
 		return nil, err
 	}

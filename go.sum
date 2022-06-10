@@ -1,3 +1,5 @@
+github.com/ebfe/brainpool v0.0.0-20130314170211-492e4d960f63 h1:SgffrhTmRVa2og8dfLHmZizJvSZ5Sm28jQUHuD+/x7Y=
+github.com/ebfe/brainpool v0.0.0-20130314170211-492e4d960f63/go.mod h1:/t8YeteVG5vsrG4X4wBPLBhru5JdXpHR9EwW0xMb3mE=
 golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e h1:T8NU3HyQ8ClP4SEE+KbFlg6n0NhuTsN4MyznaarGsZM=
 golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/sys v0.0.0-20211019181941-9d821ace8654 h1:id054HUawV2/6IGm2IV8KZQjqtwAOo2CYlOToYqa0d0=
