@@ -62,6 +62,9 @@ More to come...
 - saltpack
 - Chacha cipher
 - AES CBC
+- Encrypt private key option
+- Convert keys to SSH keys
+- Universal ParseKey() for EC and Ed keys
 
 # Encrypt (ECIES)
 
