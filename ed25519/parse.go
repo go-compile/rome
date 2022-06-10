@@ -33,8 +33,8 @@ func ParseEdPublic(public []byte) (*EdPublicKey, error) {
 	return &key, nil
 }
 
-// ParseECPublicASN1 will read a edward curve public key from ASN.1 DER format
-func ParseECPublicASN1(der []byte) (*EdPublicKey, error) {
+// ParseEdPublicASN1 will read a edward curve public key from ASN.1 DER format
+func ParseEdPublicASN1(der []byte) (*EdPublicKey, error) {
 	pub, err := x509.ParsePKIXPublicKey(der)
 	if err != nil {
 		return nil, err
