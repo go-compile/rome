@@ -81,6 +81,7 @@ const (
 	DSA // Unsupported.
 	ECDSA
 	Ed25519
+	Ed448
 )
 
 var publicKeyAlgoName = [...]string{
@@ -88,6 +89,7 @@ var publicKeyAlgoName = [...]string{
 	DSA:     "DSA",
 	ECDSA:   "ECDSA",
 	Ed25519: "Ed25519",
+	Ed448:   "Ed448",
 }
 
 func (algo PublicKeyAlgorithm) String() string {
@@ -167,6 +169,7 @@ var (
 	oidSignatureECDSAWithSHA384 = asn1.ObjectIdentifier{1, 2, 840, 10045, 4, 3, 3}
 	oidSignatureECDSAWithSHA512 = asn1.ObjectIdentifier{1, 2, 840, 10045, 4, 3, 4}
 	oidSignatureEd25519         = asn1.ObjectIdentifier{1, 3, 101, 112}
+	oidSignatureEd448           = asn1.ObjectIdentifier{1, 3, 101, 113}
 
 	oidSHA256 = asn1.ObjectIdentifier{2, 16, 840, 1, 101, 3, 4, 2, 1}
 	oidSHA384 = asn1.ObjectIdentifier{2, 16, 840, 1, 101, 3, 4, 2, 2}
@@ -204,6 +207,7 @@ var signatureAlgorithmDetails = []struct {
 	{ECDSAWithSHA384, "ECDSA-SHA384", oidSignatureECDSAWithSHA384, ECDSA, crypto.SHA384},
 	{ECDSAWithSHA512, "ECDSA-SHA512", oidSignatureECDSAWithSHA512, ECDSA, crypto.SHA512},
 	{PureEd25519, "Ed25519", oidSignatureEd25519, Ed25519, crypto.Hash(0) /* no pre-hashing */},
+	{PureEd25519, "Ed448", oidSignatureEd448, Ed448, crypto.Hash(0) /* no pre-hashing */},
 }
 
 // hashToPSSParameters contains the DER encoded RSA PSS parameters for the
@@ -306,6 +310,7 @@ var (
 	oidPublicKeyDSA     = asn1.ObjectIdentifier{1, 2, 840, 10040, 4, 1}
 	oidPublicKeyECDSA   = asn1.ObjectIdentifier{1, 2, 840, 10045, 2, 1}
 	oidPublicKeyEd25519 = oidSignatureEd25519
+	oidPublicKeyEd448   = asn1.ObjectIdentifier{1, 3, 101, 113}
 )
 
 func getPublicKeyAlgorithmFromOID(oid asn1.ObjectIdentifier) PublicKeyAlgorithm {
@@ -318,6 +323,8 @@ func getPublicKeyAlgorithmFromOID(oid asn1.ObjectIdentifier) PublicKeyAlgorithm 
 		return ECDSA
 	case oid.Equal(oidPublicKeyEd25519):
 		return Ed25519
+	case oid.Equal(oidPublicKeyEd448):
+		return Ed448
 	}
 	return UnknownPublicKeyAlgorithm
 }

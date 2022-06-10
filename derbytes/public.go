@@ -18,6 +18,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/cloudflare/circl/sign/ed448"
 	"golang.org/x/crypto/cryptobyte"
 	cryptobyte_asn1 "golang.org/x/crypto/cryptobyte/asn1"
 )
@@ -147,6 +148,14 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo) (any, error
 			return nil, errors.New("x509: wrong Ed25519 public key size")
 		}
 		return ed25519.PublicKey(der), nil
+	case Ed448:
+		if len(keyData.Algorithm.Parameters.FullBytes) != 0 {
+			return nil, errors.New("x509: Ed448 key encoded with illegal parameters")
+		}
+		if len(der) != ed448.PublicKeySize {
+			return nil, errors.New("x509: wrong Ed448 public key size")
+		}
+		return ed448.PublicKey(der), nil
 	case DSA:
 		y := new(big.Int)
 		if !der.ReadASN1Integer(y) {

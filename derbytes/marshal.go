@@ -9,6 +9,8 @@ import (
 	"encoding/asn1"
 	"errors"
 	"fmt"
+
+	circlEd448 "github.com/cloudflare/circl/sign/ed448"
 )
 
 func marshalPublicKey(pub any) (publicKeyBytes []byte, publicKeyAlgorithm pkix.AlgorithmIdentifier, err error) {
@@ -41,6 +43,9 @@ func marshalPublicKey(pub any) (publicKeyBytes []byte, publicKeyAlgorithm pkix.A
 	case ed25519.PublicKey:
 		publicKeyBytes = pub
 		publicKeyAlgorithm.Algorithm = oidPublicKeyEd25519
+	case circlEd448.PublicKey:
+		publicKeyBytes = pub
+		publicKeyAlgorithm.Algorithm = oidPublicKeyEd448
 	default:
 		return nil, pkix.AlgorithmIdentifier{}, fmt.Errorf("x509: unsupported public key type: %T", pub)
 	}

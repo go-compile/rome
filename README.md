@@ -49,7 +49,8 @@ More to come...
 | Brainpool P224t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P256r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P256t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
-| Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
+| Ed25519           | Edwards Curve  |  ✔   |   ✔    |   n/a   | n/a |
+| Ed448             | Edwards Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 
