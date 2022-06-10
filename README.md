@@ -37,6 +37,7 @@ More to come...
 | Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | Brainpool P160r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P160t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 
 </div>

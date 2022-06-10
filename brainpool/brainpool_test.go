@@ -21,6 +21,17 @@ func TestP160r1(t *testing.T) {
 	ECIES(t, key)
 }
 
+func TestP160t1(t *testing.T) {
+	key, err := brainpool.GenerateP160t1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
+
 func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
 
 	p, err := key.Private()
