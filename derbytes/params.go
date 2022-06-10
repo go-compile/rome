@@ -367,6 +367,8 @@ func namedCurveFromOID(oid asn1.ObjectIdentifier) elliptic.Curve {
 		return brainpool.P160t1()
 	case oid.Equal(oidNamedCurveBrainpoolP192r1):
 		return brainpool.P192r1()
+	case oid.Equal(oidNamedCurveBrainpoolP192t1):
+		return brainpool.P192t1()
 	}
 	return nil
 }
@@ -387,6 +389,8 @@ func oidFromNamedCurve(curve elliptic.Curve) (asn1.ObjectIdentifier, bool) {
 		return oidNamedCurveBrainpoolP160t1, true
 	case brainpool.P192r1():
 		return oidNamedCurveBrainpoolP192r1, true
+	case brainpool.P192t1():
+		return oidNamedCurveBrainpoolP192t1, true
 	}
 
 	return nil, false

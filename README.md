@@ -36,9 +36,11 @@ More to come...
 | Nist P-224        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+| x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | Brainpool P160r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P160t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
-| x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+| Brainpool P192r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P192t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 
 </div>
 
