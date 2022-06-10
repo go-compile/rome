@@ -10,11 +10,18 @@ import (
 	"github.com/go-compile/rome/brainpool"
 )
 
-func TestParsePrivateKeyP160r1(t *testing.T) {
+func TestP160r1(t *testing.T) {
 	key, err := brainpool.GenerateP160r()
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
+
+func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
 
 	p, err := key.Private()
 	if err != nil {
@@ -34,11 +41,7 @@ func TestParsePrivateKeyP160r1(t *testing.T) {
 	}
 }
 
-func TestParsePubVerify(t *testing.T) {
-	key, err := brainpool.GenerateP160r()
-	if err != nil {
-		t.Fatal(err)
-	}
+func parsePubVerify(t *testing.T, key rome.PrivateKey) {
 
 	m := "This is a important message which must be authenticated."
 	h := sha256.New()
@@ -70,12 +73,7 @@ func TestParsePubVerify(t *testing.T) {
 	}
 }
 
-func TestParseECIES(t *testing.T) {
-	key, err := brainpool.GenerateP160r()
-	if err != nil {
-		t.Fatal(err)
-	}
-
+func ECIES(t *testing.T, key rome.PrivateKey) {
 	m := []byte("secret message.")
 
 	ciphertext, err := key.Public().Encrypt(m, rome.CipherAES_GCM, sha256.New())
