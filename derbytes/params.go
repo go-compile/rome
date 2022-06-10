@@ -349,6 +349,8 @@ var (
 	oidNamedCurveBrainpoolP192t1 = asn1.ObjectIdentifier{1, 3, 840, 10045, 1, 4}
 	oidNamedCurveBrainpoolP224r1 = asn1.ObjectIdentifier{1, 3, 840, 10045, 1, 5}
 	oidNamedCurveBrainpoolP224t1 = asn1.ObjectIdentifier{1, 3, 840, 10045, 1, 6}
+	oidNamedCurveBrainpoolP256r1 = asn1.ObjectIdentifier{1, 3, 840, 10045, 1, 7}
+	oidNamedCurveBrainpoolP256t1 = asn1.ObjectIdentifier{1, 3, 840, 10045, 1, 8}
 )
 
 func namedCurveFromOID(oid asn1.ObjectIdentifier) elliptic.Curve {
@@ -373,6 +375,10 @@ func namedCurveFromOID(oid asn1.ObjectIdentifier) elliptic.Curve {
 		return brainpool.P224r1()
 	case oid.Equal(oidNamedCurveBrainpoolP224t1):
 		return brainpool.P224t1()
+	case oid.Equal(oidNamedCurveBrainpoolP256r1):
+		return brainpool.P256r1()
+	case oid.Equal(oidNamedCurveBrainpoolP256t1):
+		return brainpool.P256t1()
 	}
 	return nil
 }
@@ -399,6 +405,10 @@ func oidFromNamedCurve(curve elliptic.Curve) (asn1.ObjectIdentifier, bool) {
 		return oidNamedCurveBrainpoolP224r1, true
 	case brainpool.P224t1():
 		return oidNamedCurveBrainpoolP224t1, true
+	case brainpool.P256r1():
+		return oidNamedCurveBrainpoolP256r1, true
+	case brainpool.P256t1():
+		return oidNamedCurveBrainpoolP256t1, true
 	}
 
 	return nil, false
