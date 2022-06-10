@@ -54,6 +54,28 @@ func TestP192t1(t *testing.T) {
 	ECIES(t, key)
 }
 
+func TestP224r1(t *testing.T) {
+	key, err := brainpool.GenerateP224r1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
+
+func TestP224t1(t *testing.T) {
+	key, err := brainpool.GenerateP224t1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
+
 func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
 
 	p, err := key.Private()

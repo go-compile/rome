@@ -1,6 +1,6 @@
 # Rome
 
-The Elliptic and Edward Curve cryptography library built for multi-curve use.
+The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc.
 
 # Curves
 
@@ -9,6 +9,11 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use.
 - nist P-256
 - nist P-224
 - Ed25519
+- Brainpool P160t1
+- Brainpool P192r1
+- Brainpool P192t1
+- Brainpool P224r1
+- Brainpool P224t1
 
 More to come...
 
@@ -34,22 +39,25 @@ More to come...
 | Nist P-384        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Nist P-256        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Nist P-224        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
-| Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
-| x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
-| x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | Brainpool P160r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P160t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P192r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P192t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P224r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P224t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Ed25519           |  Edward Curve  |  ✔   |   ✔    |   n/a   | n/a |
+| x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+| x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 
 </div>
 
 # Todo
 
-- ECIES: nist curves, Curve25519, Curve448
 - Maybe RSA
 - secp256k1
 - saltpack
+- Chacha cipher
+- AES CBC
 
 # Encrypt (ECIES)
 
