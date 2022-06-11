@@ -97,6 +97,26 @@ func TestP256t1(t *testing.T) {
 	parsePubVerify(t, key)
 	ECIES(t, key)
 }
+func TestP320r1(t *testing.T) {
+	key, err := brainpool.GenerateP320r1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
+func TestP320t1(t *testing.T) {
+	key, err := brainpool.GenerateP320t1()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	parsePrivateKey(t, key)
+	parsePubVerify(t, key)
+	ECIES(t, key)
+}
 
 func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
 

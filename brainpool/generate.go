@@ -135,3 +135,35 @@ func GenerateP256t1() (*rome.ECKey, error) {
 	// is where all the code for interfacing with such curves are.
 	return rome.NewECCurve(k), nil
 }
+
+// GenerateP320r1 will create a new Brainpool elliptic curve public/private key pair
+func GenerateP320r1() (*rome.ECKey, error) {
+
+	k, err := ecdsa.GenerateKey(brainpool.P320r1(), rand.Reader)
+	if err != nil {
+		return nil, err
+	}
+
+	k.Curve.Params().Name = "brainpoolP320r1"
+
+	// ecdsa curves share a common interface.
+	// Go's elliptic.Curve only comes with Nist curves thus the package nist
+	// is where all the code for interfacing with such curves are.
+	return rome.NewECCurve(k), nil
+}
+
+// GenerateP320t1 will create a new Brainpool elliptic curve public/private key pair
+func GenerateP320t1() (*rome.ECKey, error) {
+
+	k, err := ecdsa.GenerateKey(brainpool.P320t1(), rand.Reader)
+	if err != nil {
+		return nil, err
+	}
+
+	k.Curve.Params().Name = "brainpoolP320t1"
+
+	// ecdsa curves share a common interface.
+	// Go's elliptic.Curve only comes with Nist curves thus the package nist
+	// is where all the code for interfacing with such curves are.
+	return rome.NewECCurve(k), nil
+}
