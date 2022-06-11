@@ -24,6 +24,8 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 | Brainpool P320t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P384r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Brainpool P384t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P512r1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
+| Brainpool P512t1  | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Ed25519           | Edwards Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | Ed448             | Edwards Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
@@ -77,6 +79,8 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 - Brainpool P320t1
 - Brainpool P384r1
 - Brainpool P384t1
+- Brainpool P512r1
+- Brainpool P512t1
 
 More to come...
 
