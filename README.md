@@ -48,6 +48,7 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 |     AES_GCM     |       ✔       |
 |    ChaCha20     |       ✖       |
 | ChaCha20_SHA256 |       ✔       |
+| ChaCha20_SH512  |       ✔       |
 
 ChaCha_512 and ChaCha_Polly1305 coming soon...
 

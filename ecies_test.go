@@ -76,3 +76,48 @@ func TestECIESModifyLength(t *testing.T) {
 		}
 	}
 }
+
+func TestECIESModifyLengthChaChaSHA512(t *testing.T) {
+	k, err := p224.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	ciphertext, err := k.ECPublic().Encrypt(msg, rome.CipherChacha20_SHA512, sha256.New())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	ciphertext_bak := ciphertext
+
+	for {
+		if len(ciphertext) == 0 {
+			break
+		}
+
+		fmt.Print(".")
+
+		ciphertext = ciphertext[1:]
+		_, err := k.Decrypt(ciphertext, rome.CipherChacha20_SHA512, sha256.New())
+		if err == nil {
+			t.Fatal("input was manipulated but decrypt was falsy a success")
+		}
+	}
+
+	fmt.Println()
+	ciphertext = ciphertext_bak
+	for {
+		if len(ciphertext) == 0 {
+			break
+		}
+
+		fmt.Print("+")
+
+		ciphertext = ciphertext[:len(ciphertext)-1]
+		_, err := k.Decrypt(ciphertext, rome.CipherChacha20_SHA512, sha256.New())
+		if err == nil {
+			t.Fatal("input was manipulated but decrypt was falsy a success")
+		}
+	}
+}

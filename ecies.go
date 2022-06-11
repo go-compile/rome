@@ -8,6 +8,7 @@ import (
 	"crypto/hmac"
 	"crypto/rand"
 	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/asn1"
 	"errors"
 	"hash"
@@ -28,6 +29,9 @@ const (
 	// CipherChacha20_SHA256 is a authenticated Encrypt-then-MAC (EtM) cipher using ChaCha20
 	// the MAC is a SHA256 hmac with the secret being the encryption key
 	CipherChacha20_SHA256
+	// CipherChacha20_SHA512 is a authenticated Encrypt-then-MAC (EtM) cipher using ChaCha20
+	// the MAC is a SHA512 hmac with the secret being the encryption key
+	CipherChacha20_SHA512
 )
 
 var (
@@ -118,6 +122,24 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 		output.Write(dst)
 
 		return output.Bytes(), nil
+	case CipherChacha20_SHA512:
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		dst := make([]byte, len(m))
+		b.XORKeyStream(dst, m)
+
+		// calculate SHA512 HMAC to authenticate the cipher
+		h := hmac.New(sha512.New, secret)
+		h.Write(dst)
+
+		output.Write(nonce)
+		output.Write(h.Sum(nil))
+		output.Write(dst)
+
+		return output.Bytes(), nil
 	default:
 		return nil, ErrUnknownCipher
 	}
@@ -183,6 +205,10 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 
 		return plaintext, nil
 	case CipherChacha20_SHA256:
+		if len(ciphertext) < 32 {
+			return nil, ErrCipherTxtSmall
+		}
+
 		mac := ciphertext[:32]
 		ciphertext = ciphertext[32:]
 
@@ -197,6 +223,32 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 
 		// calculate SHA256 HMAC to authenticate the cipher
 		h := hmac.New(sha256.New, secret)
+		h.Write(ciphertext)
+
+		if !bytes.Equal(h.Sum(nil), mac) {
+			return nil, ErrAuthFail
+		}
+
+		return plaintext, nil
+	case CipherChacha20_SHA512:
+		if len(ciphertext) < 64 {
+			return nil, ErrCipherTxtSmall
+		}
+
+		mac := ciphertext[:64]
+		ciphertext = ciphertext[64:]
+
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		// decrypt by xoring the ciphertext back
+		plaintext := make([]byte, len(ciphertext))
+		b.XORKeyStream(plaintext, ciphertext)
+
+		// calculate SHA512 HMAC to authenticate the cipher
+		h := hmac.New(sha512.New, secret)
 		h.Write(ciphertext)
 
 		if !bytes.Equal(h.Sum(nil), mac) {
