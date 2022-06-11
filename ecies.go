@@ -5,10 +5,14 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/ecdsa"
+	"crypto/hmac"
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/asn1"
 	"errors"
 	"hash"
+
+	"golang.org/x/crypto/chacha20"
 )
 
 // Cipher specifies what cipher to use in encryption
@@ -17,6 +21,13 @@ type Cipher uint8
 const (
 	// CipherAES_GCM is a AHEAD cipher and is recommended for most use cases
 	CipherAES_GCM = iota
+	// CipherChacha20 is a UNAUTHENTICATED cipher and is only provided with the expectation
+	// you will handle the data integrity by using a MAC. Or instead please use one of the
+	// provided authenticated ChaCha ciphers below.
+	CipherChacha20
+	// CipherChacha20_SHA256 is a authenticated Encrypt-then-MAC (EtM) cipher using ChaCha20
+	// the MAC is a SHA256 hmac with the secret being the encryption key
+	CipherChacha20_SHA256
 )
 
 var (
@@ -24,6 +35,8 @@ var (
 	ErrUnknownCipher = errors.New("unknown cipher suite")
 	// ErrCipherTxtSmall is returned if the data is so small it must be invalid
 	ErrCipherTxtSmall = errors.New("cipher text is too small")
+	// ErrAuthFail is returned when the ciphertext mac fails
+	ErrAuthFail = errors.New("message authentication failed")
 )
 
 // Encrypt uses ECIES hybrid encryption
@@ -52,7 +65,7 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 	output := bytes.NewBuffer(public)
 
 	// generate a nonce for added security
-	nonce := make([]byte, 16)
+	nonce := make([]byte, 12)
 	if _, err := rand.Read(nonce); err != nil {
 		return nil, err
 	}
@@ -74,6 +87,35 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 		// it on the other end
 		ciphertext := cipher.Seal(nil, nonce, m, nil)
 		output.Write(append(nonce, ciphertext...))
+
+		return output.Bytes(), nil
+	case CipherChacha20:
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		dst := make([]byte, len(m))
+		b.XORKeyStream(dst, m)
+
+		output.Write(append(nonce, dst...))
+		return output.Bytes(), nil
+	case CipherChacha20_SHA256:
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		dst := make([]byte, len(m))
+		b.XORKeyStream(dst, m)
+
+		// calculate SHA256 HMAC to authenticate the cipher
+		h := hmac.New(sha256.New, secret)
+		h.Write(dst)
+
+		output.Write(nonce)
+		output.Write(h.Sum(nil))
+		output.Write(dst)
 
 		return output.Bytes(), nil
 	default:
@@ -108,12 +150,12 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 	}
 
 	// range check length
-	if len(ciphertext) < 16 {
+	if len(ciphertext) < 12 {
 		return nil, ErrCipherTxtSmall
 	}
 
-	nonce := ciphertext[:16]
-	ciphertext = ciphertext[16:]
+	nonce := ciphertext[:12]
+	ciphertext = ciphertext[12:]
 
 	switch c {
 	case CipherAES_GCM:
@@ -128,6 +170,40 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 		}
 
 		return cipher.Open(nil, nonce, ciphertext, nil)
+	case CipherChacha20:
+
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		// decrypt by xoring the ciphertext back
+		plaintext := make([]byte, len(ciphertext))
+		b.XORKeyStream(plaintext, ciphertext)
+
+		return plaintext, nil
+	case CipherChacha20_SHA256:
+		mac := ciphertext[:32]
+		ciphertext = ciphertext[32:]
+
+		b, err := chacha20.NewUnauthenticatedCipher(secret, nonce)
+		if err != nil {
+			return nil, err
+		}
+
+		// decrypt by xoring the ciphertext back
+		plaintext := make([]byte, len(ciphertext))
+		b.XORKeyStream(plaintext, ciphertext)
+
+		// calculate SHA256 HMAC to authenticate the cipher
+		h := hmac.New(sha256.New, secret)
+		h.Write(ciphertext)
+
+		if !bytes.Equal(h.Sum(nil), mac) {
+			return nil, ErrAuthFail
+		}
+
+		return plaintext, nil
 	}
 
 	return nil, ErrUnknownCipher
@@ -148,4 +224,15 @@ func (k *ECPublicKey) generateEphemeralKey() (*ECKey, error) {
 			ecdsa: &k2.PublicKey,
 		},
 	}, nil
+}
+
+func encryptGCM(b cipher.Block, m, nonce []byte) ([]byte, error) {
+	cipher, err := cipher.NewGCMWithNonceSize(b, len(nonce))
+	if err != nil {
+		return nil, err
+	}
+
+	ciphertext := cipher.Seal(nil, nonce, m, nil)
+
+	return ciphertext, nil
 }

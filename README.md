@@ -2,35 +2,6 @@
 
 The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc.
 
-# Curves
-
-- nist P-521
-- nist P-384
-- nist P-256
-- nist P-224
-- Ed25519
-- Brainpool P160t1
-- Brainpool P192r1
-- Brainpool P192t1
-- Brainpool P224r1
-- Brainpool P224t1
-- Brainpool P256r1
-- Brainpool P256t1
-
-More to come...
-
-# Features
-
-- Generate key
-- Export (Public, Private) PEM **and** ASN.1 DER bytes
-- Import (Public, Private) PEM **and** ASN.1 DER bytes
-- Sign (ASN.1 format)
-- Verify
-- Elliptic Curve Diffie Hellman (ECDH)
-- Encrypt (ECIES: AES_GCM 128 & 256 bit)
-- Decrypt
-- Retrieve Points
-
 <div align=center>
 
 ## Implemented Curves & Features
@@ -55,6 +26,50 @@ More to come...
 | x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 
 </div>
+
+# Features
+
+- Generate key
+- Export (Public, Private) PEM **and** ASN.1 DER bytes
+- Import (Public, Private) PEM **and** ASN.1 DER bytes
+- Sign (ASN.1 format)
+- Verify
+- Elliptic Curve Diffie Hellman (ECDH)
+- Encrypt (ECIES: AES_GCM 128 & 256 bit)
+- Decrypt
+- Retrieve Points
+
+# Ciphers
+
+<div align="center">
+
+|     Cipher      | Authenticated |
+| :-------------: | :-----------: |
+|     AES_GCM     |       ✔       |
+|    ChaCha20     |       ✖       |
+| ChaCha20_SHA256 |       ✔       |
+
+ChaCha_512 and ChaCha_Polly1305 coming soon...
+
+</div>
+
+# Curves
+
+- nist P-521
+- nist P-384
+- nist P-256
+- nist P-224
+- Ed25519
+- Ed448
+- Brainpool P160t1
+- Brainpool P192r1
+- Brainpool P192t1
+- Brainpool P224r1
+- Brainpool P224t1
+- Brainpool P256r1
+- Brainpool P256t1
+
+More to come...
 
 # Todo
 
@@ -96,7 +111,7 @@ func main() {
 
 	msg := []byte("Secret message.")
 
-	// encrypt message using AES256_GCM with SHA256 and a 128bit nonce
+	// encrypt message using AES256_GCM with SHA256 and a 98bit nonce
 	ciphertext, err := pub.Encrypt(msg, rome.CipherAES_GCM, sha256.New())
 	if err != nil {
 		panic(err)
