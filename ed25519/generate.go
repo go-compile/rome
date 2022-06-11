@@ -24,5 +24,5 @@ func PublicFrom(p []byte) *EdPublicKey {
 
 // PrivateFrom will take the private key bytes and return a EdKey
 func PrivateFrom(p []byte) *EdKey {
-	return &EdKey{priv: p, pub: ed25519.PrivateKey(p).Public().([]byte)}
+	return &EdKey{priv: p, pub: ed25519.PrivateKey(p).Public().(ed25519.PublicKey)}
 }

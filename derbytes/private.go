@@ -39,6 +39,11 @@ type ecPrivateKey struct {
 	PublicKey     asn1.BitString        `asn1:"optional,explicit,tag:1"`
 }
 
+var (
+	// ErrUseECParseInstead is returned if parsing a private key in the wrong function
+	ErrUseECParseInstead = errors.New("x509: failed to parse private key (use ParseECPrivateKey instead for this key format)")
+)
+
 // ParseECPrivateKey parses an EC private key in SEC 1, ASN.1 DER form.
 //
 // This kind of key is commonly encoded in PEM blocks of type "EC PRIVATE KEY".
@@ -140,7 +145,7 @@ func ParsePKCS8PrivateKey(der []byte) (key any, err error) {
 	var privKey pkcs8
 	if _, err := asn1.Unmarshal(der, &privKey); err != nil {
 		if _, err := asn1.Unmarshal(der, &ecPrivateKey{}); err == nil {
-			return nil, errors.New("x509: failed to parse private key (use ParseECPrivateKey instead for this key format)")
+			return nil, ErrUseECParseInstead
 		}
 		if _, err := asn1.Unmarshal(der, &pkcs1PrivateKey{}); err == nil {
 			return nil, errors.New("x509: failed to parse private key (use ParsePKCS1PrivateKey instead for this key format)")

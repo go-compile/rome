@@ -12,170 +12,170 @@ import (
 	"github.com/go-compile/rome/parse"
 )
 
-func TestPemParseP521(t *testing.T) {
+func TestPrivatePemParseP521(t *testing.T) {
 	k, err := p521.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().Key()
+	priv, err := k.Private()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.Public(pub)
+	pk, err := parse.Private(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseEd25519(t *testing.T) {
+func TestPrivatePemParseEd25519(t *testing.T) {
 	k, err := ed25519.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().Key()
+	priv, err := k.Private()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.Public(pub)
+	pk, err := parse.Private(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseEd448(t *testing.T) {
+func TestPrivatePemParseEd448(t *testing.T) {
 	k, err := ed448.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().Key()
+	priv, err := k.Private()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.Public(pub)
+	pk, err := parse.Private(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseBrainpoolP256r1(t *testing.T) {
+func TestPrivatePemParseBrainpoolP256r1(t *testing.T) {
 	k, err := brainpool.GenerateP256r1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().Key()
+	priv, err := k.Private()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.Public(pub)
+	pk, err := parse.Private(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseP521ASN1(t *testing.T) {
+func TestPrivateASN1ParseP521(t *testing.T) {
 	k, err := p521.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().KeyASN1()
+	priv, err := k.PrivateASN1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.PublicASN1(pub)
+	pk, err := parse.PrivateASN1(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseEd25519ASN1(t *testing.T) {
+func TestPrivateASN1ParseEd25519(t *testing.T) {
 	k, err := ed25519.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().KeyASN1()
+	priv, err := k.PrivateASN1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.PublicASN1(pub)
+	pk, err := parse.PrivateASN1(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseEd448ASN1(t *testing.T) {
+func TestPrivateASN1ParseEd448(t *testing.T) {
 	k, err := ed448.Generate()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().KeyASN1()
+	priv, err := k.PrivateASN1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.PublicASN1(pub)
+	pk, err := parse.PrivateASN1(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
 
-func TestPemParseBrainpoolP256r1ASN1(t *testing.T) {
+func TestPrivateASN1ParseBrainpoolP256r1(t *testing.T) {
 	k, err := brainpool.GenerateP256r1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pub, err := k.Public().KeyASN1()
+	priv, err := k.PrivateASN1()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	pk, err := parse.PublicASN1(pub)
+	pk, err := parse.PrivateASN1(priv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !bytes.Equal(pk.Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
+	if !bytes.Equal(pk.Public().Fingerprint(sha256.New()), k.Public().Fingerprint(sha256.New())) {
 		t.Fatal("fingerprint does not match")
 	}
 }
