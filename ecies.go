@@ -15,6 +15,7 @@ import (
 
 	"golang.org/x/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"
+	"golang.org/x/crypto/salsa20"
 )
 
 // Cipher specifies what cipher to use in encryption
@@ -33,8 +34,12 @@ const (
 	// CipherChacha20_SHA512 is a authenticated Encrypt-then-MAC (EtM) cipher using ChaCha20
 	// the MAC is a SHA512 hmac with the secret being the encryption key
 	CipherChacha20_SHA512
-	// ChaCha20Poly1305 is a authenticated cipher which takes a 256bit key
-	ChaCha20Poly1305
+	// CipherChaCha20Poly1305 is a authenticated cipher which takes a 256bit key
+	CipherChaCha20Poly1305
+	// CipherSalsa20 is a UNAUTHENTICATED cipher and is only provided with the expectation
+	// you will handle the data integrity by using a MAC. Or instead please use one of the
+	// provided authenticated ChaCha ciphers below.
+	CipherSalsa20
 )
 
 var (
@@ -44,6 +49,8 @@ var (
 	ErrCipherTxtSmall = errors.New("cipher text is too small")
 	// ErrAuthFail is returned when the ciphertext mac fails
 	ErrAuthFail = errors.New("message authentication failed")
+	// ErrKeySize is returned if the key is not supported in the encryption algorithm
+	ErrKeySize = errors.New("key size not supported")
 )
 
 // Encrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
@@ -72,8 +79,13 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 	// create new output buffer and write the ephemeral public key
 	output := bytes.NewBuffer(public)
 
+	nonceLen := 12
+	if c == CipherSalsa20 {
+		nonceLen = 8
+	}
+
 	// generate a nonce for added security
-	nonce := make([]byte, 12)
+	nonce := make([]byte, nonceLen)
 	if _, err := rand.Read(nonce); err != nil {
 		return nil, err
 	}
@@ -144,7 +156,7 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 		output.Write(dst)
 
 		return output.Bytes(), nil
-	case ChaCha20Poly1305:
+	case CipherChaCha20Poly1305:
 		b, err := chacha20poly1305.New(secret)
 		if err != nil {
 			return nil, err
@@ -154,6 +166,22 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 
 		output.Write(nonce)
 		output.Write(ciphertext)
+
+		return output.Bytes(), nil
+	case CipherSalsa20:
+		dst := make([]byte, len(m))
+		key := [32]byte{}
+
+		if len(secret) != 32 {
+			return nil, ErrKeySize
+		}
+
+		copy(key[:], secret)
+
+		salsa20.XORKeyStream(dst, m, nonce, &key)
+
+		output.Write(nonce)
+		output.Write(dst)
 
 		return output.Bytes(), nil
 	default:
@@ -188,13 +216,18 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 		return nil, err
 	}
 
+	nonceLen := 12
+	if c == CipherSalsa20 {
+		nonceLen = 8
+	}
+
 	// range check length
-	if len(ciphertext) < 12 {
+	if len(ciphertext) < nonceLen {
 		return nil, ErrCipherTxtSmall
 	}
 
-	nonce := ciphertext[:12]
-	ciphertext = ciphertext[12:]
+	nonce := ciphertext[:nonceLen]
+	ciphertext = ciphertext[nonceLen:]
 
 	switch c {
 	case CipherAES_GCM:
@@ -273,13 +306,25 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 		}
 
 		return plaintext, nil
-	case ChaCha20Poly1305:
+	case CipherChaCha20Poly1305:
 		b, err := chacha20poly1305.New(secret)
 		if err != nil {
 			return nil, err
 		}
 
 		return b.Open(nil, nonce, ciphertext, nil)
+	case CipherSalsa20:
+		dst := make([]byte, len(ciphertext))
+		key := [32]byte{}
+
+		if len(secret) != 32 {
+			return nil, ErrKeySize
+		}
+
+		copy(key[:], secret)
+
+		salsa20.XORKeyStream(dst, ciphertext, nonce, &key)
+		return dst, nil
 	}
 
 	return nil, ErrUnknownCipher
@@ -300,15 +345,4 @@ func (k *ECPublicKey) generateEphemeralKey() (*ECKey, error) {
 			ecdsa: &k2.PublicKey,
 		},
 	}, nil
-}
-
-func encryptGCM(b cipher.Block, m, nonce []byte) ([]byte, error) {
-	cipher, err := cipher.NewGCMWithNonceSize(b, len(nonce))
-	if err != nil {
-		return nil, err
-	}
-
-	ciphertext := cipher.Seal(nil, nonce, m, nil)
-
-	return ciphertext, nil
 }

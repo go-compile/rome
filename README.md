@@ -50,6 +50,7 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 |  ChaCha20_SHA256  |       ✔       |
 |  ChaCha20_SHA512  |       ✔       |
 | ChaCha20_Poly1305 |       ✔       |
+|      Salsa20      |       ✖       |
 
 </div>
 
