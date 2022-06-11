@@ -19,3 +19,14 @@ func Generate() (*EdKey, error) {
 		priv: priv,
 	}, nil
 }
+
+// PublicFrom will take the public key bytes and return a EdPublic key
+func PublicFrom(p []byte) *EdPublicKey {
+	pub := EdPublicKey(p)
+	return &pub
+}
+
+// PrivateFrom will take the private key bytes and return a EdKey
+func PrivateFrom(p []byte) *EdKey {
+	return &EdKey{priv: p, pub: ed448.PrivateKey(p).Public().([]byte)}
+}
