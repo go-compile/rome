@@ -71,7 +71,7 @@ func ParseEdPrivate(private []byte) (*EdKey, error) {
 		return nil, rome.ErrWrongKey
 	}
 
-	pub, ok := p.Public().([]byte)
+	pub, ok := p.Public().(ed25519.PublicKey)
 	if !ok {
 		return nil, errors.New("could not derive public key")
 	}

@@ -50,7 +50,7 @@ func ParseEdPublicASN1(der []byte) (*EdPublicKey, error) {
 }
 
 // ParseEdPrivate will read a PEM ASN.1 DER encoded key
-func ParseEdPrivate(public, private []byte) (*EdKey, error) {
+func ParseEdPrivate(private []byte) (*EdKey, error) {
 	b, _ := pem.Decode(private)
 	if b == nil {
 		return nil, rome.ErrInvalidPem
@@ -70,21 +70,7 @@ func ParseEdPrivate(public, private []byte) (*EdKey, error) {
 		return nil, rome.ErrWrongKey
 	}
 
-	b, _ = pem.Decode(public)
-	if b == nil {
-		return nil, rome.ErrInvalidPem
-	}
-
-	if b.Type != "ED PUBLIC KEY" {
-		return nil, rome.ErrWrongKey
-	}
-
-	pub, err := derbytes.ParsePKIXPublicKey(b.Bytes)
-	if err != nil {
-		return nil, err
-	}
-
-	pk, ok := pub.(ed448.PublicKey)
+	pk, ok := p.Public().(ed448.PublicKey)
 	if !ok {
 		return nil, rome.ErrWrongKey
 	}
@@ -96,7 +82,7 @@ func ParseEdPrivate(public, private []byte) (*EdKey, error) {
 }
 
 // ParseEdPrivateASN1 will read a ASN.1 DER encoded key
-func ParseEdPrivateASN1(public, private []byte) (*EdKey, error) {
+func ParseEdPrivateASN1(private []byte) (*EdKey, error) {
 	priv, err := derbytes.ParsePKCS8PrivateKey(private)
 	if err != nil {
 		return nil, err
@@ -107,12 +93,7 @@ func ParseEdPrivateASN1(public, private []byte) (*EdKey, error) {
 		return nil, rome.ErrWrongKey
 	}
 
-	pub, err := derbytes.ParsePKCS8PrivateKey(public)
-	if err != nil {
-		return nil, err
-	}
-
-	pk, ok := pub.(ed448.PublicKey)
+	pk, ok := p.Public().(ed448.PublicKey)
 	if !ok {
 		return nil, rome.ErrWrongKey
 	}
