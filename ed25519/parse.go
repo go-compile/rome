@@ -4,6 +4,7 @@ import (
 	"crypto/ed25519"
 	"crypto/x509"
 	"encoding/pem"
+	"errors"
 
 	"github.com/go-compile/rome"
 )
@@ -50,7 +51,7 @@ func ParseEdPublicASN1(der []byte) (*EdPublicKey, error) {
 }
 
 // ParseEdPrivate will read a PEM ASN.1 DER encoded key
-func ParseEdPrivate(public, private []byte) (*EdKey, error) {
+func ParseEdPrivate(private []byte) (*EdKey, error) {
 	b, _ := pem.Decode(private)
 	if b == nil {
 		return nil, rome.ErrInvalidPem
@@ -70,33 +71,19 @@ func ParseEdPrivate(public, private []byte) (*EdKey, error) {
 		return nil, rome.ErrWrongKey
 	}
 
-	b, _ = pem.Decode(public)
-	if b == nil {
-		return nil, rome.ErrInvalidPem
-	}
-
-	if b.Type != "ED PUBLIC KEY" {
-		return nil, rome.ErrWrongKey
-	}
-
-	pub, err := x509.ParsePKIXPublicKey(b.Bytes)
-	if err != nil {
-		return nil, err
-	}
-
-	pk, ok := pub.(ed25519.PublicKey)
+	pub, ok := p.Public().([]byte)
 	if !ok {
-		return nil, rome.ErrWrongKey
+		return nil, errors.New("could not derive public key")
 	}
 
 	return &EdKey{
 		priv: p,
-		pub:  pk,
+		pub:  pub,
 	}, nil
 }
 
 // ParseEdPrivateASN1 will read a ASN.1 DER encoded key
-func ParseEdPrivateASN1(public, private []byte) (*EdKey, error) {
+func ParseEdPrivateASN1(private []byte) (*EdKey, error) {
 	priv, err := x509.ParsePKCS8PrivateKey(private)
 	if err != nil {
 		return nil, err
@@ -107,18 +94,13 @@ func ParseEdPrivateASN1(public, private []byte) (*EdKey, error) {
 		return nil, rome.ErrWrongKey
 	}
 
-	pub, err := x509.ParsePKCS8PrivateKey(public)
-	if err != nil {
-		return nil, err
-	}
-
-	pk, ok := pub.(ed25519.PublicKey)
+	pub, ok := p.Public().([]byte)
 	if !ok {
-		return nil, rome.ErrWrongKey
+		return nil, errors.New("could not derive public key")
 	}
 
 	return &EdKey{
 		priv: p,
-		pub:  pk,
+		pub:  pub,
 	}, nil
 }

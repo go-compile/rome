@@ -11,6 +11,8 @@ var (
 	ErrWrongKey = errors.New("wrong key type or curve")
 	// ErrInvalidPem is returned when invalid PEM data is attempted to be decoded
 	ErrInvalidPem = errors.New("invalid PEM data failed to parse")
+	// ErrDerivePub is returned if there is a error in extracting the pub key from private D
+	ErrDerivePub = errors.New("could not derive public key")
 )
 
 // PrivateKey holds the D point for the curve and the public

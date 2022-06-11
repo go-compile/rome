@@ -19,12 +19,7 @@ func TestParsePrivateKeyEd25519(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pubKey, err := key.Public().Key()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	priv, err := ed25519.ParseEdPrivate(pubKey, p)
+	priv, err := ed25519.ParseEdPrivate(p)
 	if err != nil {
 		t.Fatal(err)
 	}
