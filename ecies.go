@@ -14,6 +14,7 @@ import (
 	"hash"
 
 	"golang.org/x/crypto/chacha20"
+	"golang.org/x/crypto/chacha20poly1305"
 )
 
 // Cipher specifies what cipher to use in encryption
@@ -32,6 +33,8 @@ const (
 	// CipherChacha20_SHA512 is a authenticated Encrypt-then-MAC (EtM) cipher using ChaCha20
 	// the MAC is a SHA512 hmac with the secret being the encryption key
 	CipherChacha20_SHA512
+	// ChaCha20Poly1305 is a authenticated cipher which takes a 256bit key
+	ChaCha20Poly1305
 )
 
 var (
@@ -43,7 +46,8 @@ var (
 	ErrAuthFail = errors.New("message authentication failed")
 )
 
-// Encrypt uses ECIES hybrid encryption
+// Encrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
+// algorithm and hash is used to derive the key via the ECDH
 func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error) {
 
 	// generate ephemeral key to perform ECDH
@@ -140,12 +144,25 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 		output.Write(dst)
 
 		return output.Bytes(), nil
+	case ChaCha20Poly1305:
+		b, err := chacha20poly1305.New(secret)
+		if err != nil {
+			return nil, err
+		}
+
+		ciphertext := b.Seal(nil, nonce, m, nil)
+
+		output.Write(nonce)
+		output.Write(ciphertext)
+
+		return output.Bytes(), nil
 	default:
 		return nil, ErrUnknownCipher
 	}
 }
 
-// Decrypt uses ECIES hybrid encryption
+// Decrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
+// algorithm and hash is used to derive the key via the ECDH
 func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, error) {
 
 	// unmarshal ASN.1 der bytes to get length
@@ -256,6 +273,13 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, er
 		}
 
 		return plaintext, nil
+	case ChaCha20Poly1305:
+		b, err := chacha20poly1305.New(secret)
+		if err != nil {
+			return nil, err
+		}
+
+		return b.Open(nil, nonce, ciphertext, nil)
 	}
 
 	return nil, ErrUnknownCipher

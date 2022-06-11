@@ -80,3 +80,27 @@ func TestECIESChaChaSHA512(t *testing.T) {
 		t.Fatal("plain text is not equal")
 	}
 }
+
+func TestECIESChaChaPoly1305(t *testing.T) {
+	const cipher = rome.ChaCha20Poly1305
+
+	k, err := p224.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	ciphertext, err := k.ECPublic().Encrypt(msg, cipher, sha256.New())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	plaintext, err := k.Decrypt(ciphertext, cipher, sha256.New())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !bytes.Equal(msg, plaintext) {
+		t.Fatal("plain text is not equal")
+	}
+}

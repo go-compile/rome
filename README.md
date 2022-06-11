@@ -43,14 +43,13 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 
 <div align="center">
 
-|     Cipher      | Authenticated |
-| :-------------: | :-----------: |
-|     AES_GCM     |       ✔       |
-|    ChaCha20     |       ✖       |
-| ChaCha20_SHA256 |       ✔       |
-| ChaCha20_SH512  |       ✔       |
-
-ChaCha_512 and ChaCha_Polly1305 coming soon...
+|      Cipher       | Authenticated |
+| :---------------: | :-----------: |
+|      AES_GCM      |       ✔       |
+|     ChaCha20      |       ✖       |
+|  ChaCha20_SHA256  |       ✔       |
+|  ChaCha20_SHA512  |       ✔       |
+| ChaCha20_Poly1305 |       ✔       |
 
 </div>
 
@@ -77,7 +76,6 @@ More to come...
 - Maybe RSA
 - secp256k1
 - saltpack
-- Chacha cipher
 - AES CBC
 - Encrypt private key option
 - Convert keys to SSH keys
