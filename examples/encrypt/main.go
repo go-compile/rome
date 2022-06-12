@@ -61,8 +61,8 @@ func encryptArgon2() {
 		panic(err)
 	}
 
-	// encrypt message using AES256_GCM with ARGON2id and a 128bit nonce
-	ciphertext, err := pub.Encrypt(msg, rome.CipherAES_GCM, argon2.HashID(salt))
+	// encrypt message using AES256_GCM with ARGON2id and a 94bit nonce
+	ciphertext, err := pub.Encrypt(msg, rome.CipherAES_GCM, argon2.ID(salt))
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +76,7 @@ func encryptArgon2() {
 func decryptArgon2(k rome.PrivateKey, ciphertext []byte) {
 	salt := ciphertext[:16]
 
-	plaintext, err := k.Decrypt(ciphertext[16:], rome.CipherAES_GCM, argon2.HashID(salt))
+	plaintext, err := k.Decrypt(ciphertext[16:], rome.CipherAES_GCM, argon2.ID(salt))
 	if err != nil {
 		panic(err)
 	}

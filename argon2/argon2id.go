@@ -18,11 +18,11 @@ type Argon2id struct {
 	buf *bytes.Buffer
 }
 
-// HashID creates a new Argon2ID hash.Hash
+// ID creates a new Argon2ID hash.Hash
 //
 // It uses Argon2's recommended defaults. if you want to use custom
 // argon parameters use argon2.New()
-func HashID(salt []byte) hash.Hash {
+func ID(salt []byte) hash.Hash {
 
 	h := &Argon2id{
 		buf:  bytes.NewBuffer(nil),

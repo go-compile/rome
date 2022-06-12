@@ -13,13 +13,13 @@ func TestArgon2ID(t *testing.T) {
 	salt := make([]byte, 16)
 	rand.Read(salt)
 
-	h := argon2.HashID(salt)
+	h := argon2.ID(salt)
 	h.Write([]byte("12345"))
 	h.Write([]byte("....."))
 
 	result1 := h.Sum(nil)
 
-	h2 := argon2.HashID(salt)
+	h2 := argon2.ID(salt)
 	h2.Write([]byte("12345"))
 	h2.Write([]byte("....."))
 
@@ -38,7 +38,7 @@ func ExampleArgon2ID() {
 		panic(err)
 	}
 
-	h := argon2.HashID(salt)
+	h := argon2.ID(salt)
 	h.Write([]byte("12345"))
 	h.Write([]byte("....."))
 
