@@ -3,6 +3,7 @@ package ed448_test
 import (
 	"bytes"
 	"crypto/sha256"
+	"fmt"
 	"testing"
 
 	"github.com/go-compile/rome/ed448"
@@ -73,4 +74,14 @@ func TestParsePubVerify(t *testing.T) {
 	if !valid {
 		t.Fatal("signature was expected to be valid")
 	}
+}
+
+func ExampleGenerate() {
+	k, err := ed448.Generate()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", k.Public().Name())
+	// Output: Curve: ED448
 }
