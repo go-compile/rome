@@ -8,8 +8,8 @@ import (
 	brainpool "github.com/go-compile/rome/brainpool/bcurves"
 )
 
-// GenerateP160r will create a new Brainpool P160r elliptic curve public/private key pair
-func GenerateP160r() (*rome.ECKey, error) {
+// GenerateP160r1 will create a new Brainpool P160r elliptic curve public/private key pair
+func GenerateP160r1() (*rome.ECKey, error) {
 
 	k, err := ecdsa.GenerateKey(brainpool.P160r1(), rand.Reader)
 	if err != nil {

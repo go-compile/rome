@@ -3,6 +3,7 @@ package brainpool_test
 import (
 	"bytes"
 	"crypto/sha256"
+	"fmt"
 	"testing"
 
 	"github.com/go-compile/rome"
@@ -11,7 +12,7 @@ import (
 )
 
 func TestP160r1(t *testing.T) {
-	key, err := brainpool.GenerateP160r()
+	key, err := brainpool.GenerateP160r1()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -228,4 +229,54 @@ func ECIES(t *testing.T, key rome.PrivateKey) {
 	if !bytes.Equal(m, plaintext) {
 		t.Fatal("plain text does not match")
 	}
+}
+
+func ExampleGenerateP512t1() {
+	key, err := brainpool.GenerateP512t1()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", key.Public().Name())
+	// Output: Curve: P512t1
+}
+
+func ExampleGenerateP512r1() {
+	key, err := brainpool.GenerateP512r1()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", key.Public().Name())
+	// Output: Curve: P512r1
+}
+
+func ExampleGenerateP160r1() {
+	key, err := brainpool.GenerateP160r1()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", key.Public().Name())
+	// Output: Curve: P160r1
+}
+
+func ExampleGenerateP224r1() {
+	key, err := brainpool.GenerateP224r1()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", key.Public().Name())
+	// Output: Curve: P224r1
+}
+
+func ExampleGenerateP192r1() {
+	key, err := brainpool.GenerateP192r1()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Curve: %s\n", key.Public().Name())
+	// Output: Curve: P192r1
 }
