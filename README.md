@@ -82,17 +82,13 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 - Brainpool P512r1
 - Brainpool P512t1
 
-More to come...
-
 # Todo
 
 - Maybe RSA
 - secp256k1
 - saltpack
-- AES CBC
 - Encrypt private key option
 - Convert keys to SSH keys
-- Universal ParseKey() for EC and Ed keys
 
 # Encrypt (ECIES)
 
