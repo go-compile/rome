@@ -35,6 +35,10 @@ func newrcurve(twisted elliptic.Curve, gx, gy, z *big.Int) *rcurve {
 	curve.zinv2 = new(big.Int).Exp(curve.zinv, two, curve.params.P)
 	curve.zinv3 = new(big.Int).Exp(curve.zinv, three, curve.params.P)
 
+	// auto rename twisted curves to r1 from t1
+	name := curve.params.Name
+	curve.params.Name = name[:len(name)-2] + "r1"
+
 	return &curve
 }
 

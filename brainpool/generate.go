@@ -16,8 +16,6 @@ func GenerateP160r() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP160r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -31,8 +29,6 @@ func GenerateP160t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP160t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -48,8 +44,6 @@ func GenerateP192r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP192r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -63,8 +57,6 @@ func GenerateP192t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP192t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -80,8 +72,6 @@ func GenerateP224r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP224r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -95,8 +85,6 @@ func GenerateP224t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP224t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -112,8 +100,6 @@ func GenerateP256r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP256r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -127,8 +113,6 @@ func GenerateP256t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP256t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -144,8 +128,6 @@ func GenerateP320r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP320r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -159,8 +141,6 @@ func GenerateP320t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP320t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -176,8 +156,6 @@ func GenerateP384r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP384r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -191,8 +169,6 @@ func GenerateP384t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP384t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
@@ -208,8 +184,6 @@ func GenerateP512r1() (*rome.ECKey, error) {
 		return nil, err
 	}
 
-	k.Curve.Params().Name = "brainpoolP512r1"
-
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
 	// is where all the code for interfacing with such curves are.
@@ -223,8 +197,6 @@ func GenerateP512t1() (*rome.ECKey, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	k.Curve.Params().Name = "brainpoolP512t1"
 
 	// ecdsa curves share a common interface.
 	// Go's elliptic.Curve only comes with Nist curves thus the package nist
