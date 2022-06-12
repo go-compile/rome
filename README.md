@@ -2,6 +2,8 @@
 
 The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc.
 
+Go Version: `>= 18.0`
+
 <div align=center>
 
 ## Implemented Curves & Features
