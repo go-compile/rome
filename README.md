@@ -1,5 +1,9 @@
 # Rome
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/go-compile/rome.svg)](https://pkg.go.dev/github.com/go-compile/rome)
+[![Go Report Card](https://goreportcard.com/badge/go-compile/rome)](https://goreportcard.com/report/go-compile/rome)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/go-compile/rome/CodeQL)
+
 The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc.
 
 Go Version: `>= 18.0`
@@ -86,7 +90,7 @@ Go Version: `>= 18.0`
 
 # Todo
 
-- Maybe RSA
+- Maybe RSA (support not just ECC)
 - secp256k1
 - saltpack
 - Encrypt private key option
