@@ -14,7 +14,7 @@ type OptionHKDF struct {
 }
 
 // NewHKDF allows you to use HKDF in your ECDH.
-// Salt can be nil and keysize usually should be 64
+// Salt can be nil and keysize usually should be 32 (256bit)
 func NewHKDF(h func() hash.Hash, keysize int, salt []byte) Option {
 	return OptionHKDF{
 		KeySize: keysize,
