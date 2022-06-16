@@ -65,7 +65,7 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Opt
 	}
 
 	// perform ECDH with provided hash function and the new ephemeral key
-	secret, err := k.DH(hash, k2)
+	secret, err := k.DH(hash, k2, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...
 	// trim public key prefix
 	ciphertext = ciphertext[len(public):]
 
-	secret, err := key.DH(hash, k)
+	secret, err := key.DH(hash, k, options...)
 	if err != nil {
 		return nil, err
 	}

@@ -40,12 +40,12 @@ func TestECIESHKDF(t *testing.T) {
 	}
 
 	msg := []byte("This is the secret message 123.")
-	ciphertext, err := k.ECPublic().Encrypt(msg, rome.CipherAES_GCM, sha256.New(), rome.NewHKDF(sha512.New, 64, nil))
+	ciphertext, err := k.ECPublic().Encrypt(msg, rome.CipherAES_GCM, nil, rome.NewHKDF(sha512.New, 32, nil))
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	plaintext, err := k.Decrypt(ciphertext, rome.CipherAES_GCM, sha256.New(), rome.NewHKDF(sha512.New, 64, nil))
+	plaintext, err := k.Decrypt(ciphertext, rome.CipherAES_GCM, nil, rome.NewHKDF(sha512.New, 32, nil))
 	if err != nil {
 		t.Fatal(err)
 	}

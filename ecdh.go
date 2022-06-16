@@ -2,6 +2,7 @@ package rome
 
 import (
 	"crypto/sha256"
+	"fmt"
 	"hash"
 
 	"golang.org/x/crypto/hkdf"
@@ -15,8 +16,8 @@ func (k *ECPublicKey) DH(hash hash.Hash, g PrivateKey, options ...Option) ([]byt
 	x, y := k.ecdsa.ScalarMult(k.ecdsa.X, k.ecdsa.Y, g.PrivateRaw())
 
 	// generate shared secret
-	for _, opt := range options {
-		switch o := opt.(type) {
+	for i := range options {
+		switch o := options[i].(type) {
 		case OptionHKDF:
 			kdf := hkdf.New(sha256.New, append(x.Bytes(), y.Bytes()...), o.Salt, nil)
 
@@ -26,6 +27,8 @@ func (k *ECPublicKey) DH(hash hash.Hash, g PrivateKey, options ...Option) ([]byt
 			}
 
 			return secret, nil
+		default:
+			fmt.Printf("%v", o)
 		}
 	}
 
