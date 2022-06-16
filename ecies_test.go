@@ -3,6 +3,7 @@ package rome_test
 import (
 	"bytes"
 	"crypto/sha256"
+	"crypto/sha512"
 	"fmt"
 	"testing"
 
@@ -23,6 +24,28 @@ func TestECIES(t *testing.T) {
 	}
 
 	plaintext, err := k.Decrypt(ciphertext, rome.CipherAES_GCM, sha256.New())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !bytes.Equal(msg, plaintext) {
+		t.Fatal("plain text is not equal")
+	}
+}
+
+func TestECIESHKDF(t *testing.T) {
+	k, err := p224.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	ciphertext, err := k.ECPublic().Encrypt(msg, rome.CipherAES_GCM, sha256.New(), rome.NewHKDF(sha512.New, 64, nil))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	plaintext, err := k.Decrypt(ciphertext, rome.CipherAES_GCM, sha256.New(), rome.NewHKDF(sha512.New, 64, nil))
 	if err != nil {
 		t.Fatal(err)
 	}
