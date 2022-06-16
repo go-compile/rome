@@ -44,7 +44,7 @@ type PrivateKey interface {
 
 	// Decrypt will take a ECIES encrypted ciphertext and decrypt it using the
 	// private key
-	Decrypt(ciphertext []byte, cipher Cipher, hash hash.Hash) ([]byte, error)
+	Decrypt(ciphertext []byte, cipher Cipher, hash hash.Hash, option ...Option) ([]byte, error)
 }
 
 // PublicKey is a Elliptic/Edward curve public key
@@ -62,9 +62,9 @@ type PublicKey interface {
 	// KeyASN1 returns the public key formatted in ASN.1
 	KeyASN1() ([]byte, error)
 	// DH takes a hasher and the ephemeral private key
-	DH(h hash.Hash, g PrivateKey) ([]byte, error)
+	DH(h hash.Hash, g PrivateKey, options ...Option) ([]byte, error)
 	// Encrypt will uses ECIES to encrypt your message to the public key
-	Encrypt(msg []byte, cipher Cipher, hash hash.Hash) ([]byte, error)
+	Encrypt(msg []byte, cipher Cipher, hash hash.Hash, options ...Option) ([]byte, error)
 
 	// Fingerprint returns the hashed ASN.1 digest representing this
 	// public key. This function will panic if it fails to encode the

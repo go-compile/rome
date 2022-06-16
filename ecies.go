@@ -55,7 +55,7 @@ var (
 
 // Encrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
 // algorithm and hash is used to derive the key via the ECDH
-func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error) {
+func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 
 	// generate ephemeral key to perform ECDH
 	// it is important this key is never used again
@@ -191,7 +191,7 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash) ([]byte, error
 
 // Decrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
 // algorithm and hash is used to derive the key via the ECDH
-func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash) ([]byte, error) {
+func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 
 	// unmarshal ASN.1 der bytes to get length
 	var pub pkixPublicKey

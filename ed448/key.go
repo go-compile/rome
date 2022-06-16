@@ -115,7 +115,7 @@ func (k *EdPublicKey) Verify(msg []byte, signature []byte) (bool, error) {
 }
 
 // DH is a placeholder function to satisfy rome's Key interface.
-func (k *EdPublicKey) DH(h hash.Hash, g rome.PrivateKey) ([]byte, error) {
+func (k *EdPublicKey) DH(h hash.Hash, g rome.PrivateKey, options ...rome.Option) ([]byte, error) {
 	panic("Edward Curve does not support ECDH")
 }
 
@@ -125,12 +125,12 @@ func (k *EdPublicKey) Name() string {
 }
 
 // Encrypt is not supported on Edwards Curves
-func (k *EdPublicKey) Encrypt(msg []byte, cipher rome.Cipher, hash hash.Hash) ([]byte, error) {
+func (k *EdPublicKey) Encrypt(msg []byte, cipher rome.Cipher, hash hash.Hash, options ...rome.Option) ([]byte, error) {
 	panic("ECIES is not supported on Edward Curves")
 }
 
 // Decrypt is not supported on Edwards Curves
-func (k *EdKey) Decrypt(ciphertext []byte, cipher rome.Cipher, hash hash.Hash) ([]byte, error) {
+func (k *EdKey) Decrypt(ciphertext []byte, cipher rome.Cipher, hash hash.Hash, options ...rome.Option) ([]byte, error) {
 	panic("ECIES is not supported on Edward Curves")
 }
 
