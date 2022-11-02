@@ -8,6 +8,8 @@ The Elliptic and Edward Curve cryptography library built for multi-curve use. Un
 
 Go Version: `>= 18.0`
 
+Test Coverage: `80.0%`
+
 <div align=center>
 
 ## Implemented Curves & Features
