@@ -222,16 +222,26 @@ func (k *RSAPublicKey) RSAKey() rsa.PublicKey {
 	return *k.k
 }
 
+// Encrypt uses PKCS1v15 RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
 func (k *RSAPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 	if options != nil {
+		return nil, ErrOptionsNotSupported
+	}
+
+	if c != 0 || hash != nil {
 		return nil, ErrOptionsNotSupported
 	}
 
 	return rsa.EncryptPKCS1v15(rand.Reader, k.k, m)
 }
 
+// Decrypt uses PKCS1v15 RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
 func (k *RSAKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 	if options != nil {
+		return nil, ErrOptionsNotSupported
+	}
+
+	if c != 0 || hash != nil {
 		return nil, ErrOptionsNotSupported
 	}
 
