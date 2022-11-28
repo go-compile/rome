@@ -4,7 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/go-compile/rome)](https://goreportcard.com/report/go-compile/rome)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/go-compile/rome/CodeQL)
 
-The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc.
+The Elliptic and Edward Curve cryptography library built for multi-curve use. Unified crypto interface for ECDSA, EdDSA, ECIES and ECDH. A high level library which gives you the control: specify curve, KDFs or hash functions, ciphers etc. In addition, rome features RSA.
 
 Go Version: `>= 18.0`
 
@@ -12,9 +12,9 @@ Test Coverage: `80.0%`
 
 <div align=center>
 
-## Implemented Curves & Features
+## Implemented Curves/Keys & Features
 
-| Curve             |      Type      | Sign | Verify | Encrypt | DH  |
+| Curve/Key         |      Type      | Sign | Verify | Encrypt | DH  |
 | :---------------- | :------------: | :--: | :----: | :-----: | :-: |
 | Nist P-521        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
 | Nist P-384        | Elliptic Curve |  ✔   |   ✔    |    ✔    |  ✔  |
@@ -38,10 +38,11 @@ Test Coverage: `80.0%`
 | Ed448             | Edwards Curve  |  ✔   |   ✔    |   n/a   | n/a |
 | x25519/Curve25519 | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
 | x448 Goldilocks   | Elliptic Curve |  ✖   |   ✖    |    ✖    |  ✖  |
+| RSA               | RSA            |  ✔   |   ✔    |    ✔    |  ✖  |
 
 </div>
 
-# Features
+## Features
 
 - Generate key
 - Export (Public, Private) PEM **and** ASN.1 DER bytes
@@ -54,7 +55,7 @@ Test Coverage: `80.0%`
 - Retrieve Points
 - Convert Public Keys to SSH keys
 
-# Ciphers
+## Ciphers
 
 <div align="center">
 
@@ -69,7 +70,7 @@ Test Coverage: `80.0%`
 
 </div>
 
-# Curves
+## Curves & Keys
 
 - nist P-521
 - nist P-384
@@ -90,15 +91,15 @@ Test Coverage: `80.0%`
 - Brainpool P384t1
 - Brainpool P512r1
 - Brainpool P512t1
+- RSA
 
-# Todo
+## Todo
 
-- Maybe RSA (support not just ECC)
 - secp256k1
 - saltpack
 - Encrypt private key option
 
-# Encrypt (ECIES)
+## Encrypt (ECIES)
 
 Rome supports ECIES for elliptic curves allowing you to encrypt to a public key. Encryption can be customised with cipher options: `AES_256_GCM` (more coming soon) and customise KDFs used for shared secret generation (ECDH). Supporting the hash.Hash interface you can use your favourite algorithm. It's even possible to use Argon2 as a KDF.
 
@@ -137,13 +138,13 @@ func main() {
 }
 ```
 
-# Install
+## Install
 
 ```sh
 go get -u github.com/go-compile/rome
 ```
 
-# Examples
+## Examples
 
 Full code [examples can be found ./examples/](./examples/)
 
