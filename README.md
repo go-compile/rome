@@ -52,6 +52,7 @@ Test Coverage: `80.0%`
 - Encrypt (ECIES: AES_GCM 128 & 256 bit)
 - Decrypt
 - Retrieve Points
+- Convert Public Keys to SSH keys
 
 # Ciphers
 
@@ -96,7 +97,6 @@ Test Coverage: `80.0%`
 - secp256k1
 - saltpack
 - Encrypt private key option
-- Convert keys to SSH keys
 
 # Encrypt (ECIES)
 
