@@ -2,6 +2,7 @@ package rome
 
 import (
 	"crypto/ecdsa"
+	"crypto/elliptic"
 	"encoding/pem"
 	"hash"
 	"math"
@@ -219,4 +220,9 @@ func (k *ECPublicKey) Fingerprint(h hash.Hash) []byte {
 	h.Write(pub)
 
 	return h.Sum(nil)
+}
+
+// ECDSAKey returns the key in ecdsa.PublicKey
+func (k *ECPublicKey) ECDSAKey() elliptic.Curve {
+	return k.ecdsa
 }
