@@ -222,30 +222,30 @@ func (k *RSAPublicKey) RSAKey() rsa.PublicKey {
 	return *k.k
 }
 
-// Encrypt uses PKCS1v15 RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
+// Encrypt uses OAEP RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
 func (k *RSAPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 	if options != nil {
 		return nil, ErrOptionsNotSupported
 	}
 
-	if c != 0 || hash != nil {
+	if c != 0 {
 		return nil, ErrOptionsNotSupported
 	}
 
-	return rsa.EncryptPKCS1v15(rand.Reader, k.k, m)
+	return rsa.EncryptOAEP(hash, rand.Reader, k.k, m, nil)
 }
 
-// Decrypt uses PKCS1v15 RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
+// Decrypt uses OAEP RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS
 func (k *RSAKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
 	if options != nil {
 		return nil, ErrOptionsNotSupported
 	}
 
-	if c != 0 || hash != nil {
+	if c != 0 {
 		return nil, ErrOptionsNotSupported
 	}
 
-	return rsa.DecryptPKCS1v15(rand.Reader, k.priv, ciphertext)
+	return rsa.DecryptOAEP(hash, rand.Reader, k.priv, ciphertext, nil)
 }
 
 func (k *RSAPublicKey) DH(hash hash.Hash, g PrivateKey, options ...Option) ([]byte, error) {
