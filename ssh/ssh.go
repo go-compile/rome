@@ -14,12 +14,14 @@ var (
 )
 
 // ToKey converts a rome public key to a SSH key.
-// Only works with: P-256, P-384 or P-521
+// Only works with: P-256, P-384, P-521 or RSA
 func ToKey(pub rome.PublicKey) (ssh.PublicKey, error) {
 
 	switch k := pub.(type) {
 	case *rome.ECPublicKey:
 		return ssh.NewPublicKey(k.ECDSAKey())
+	case *rome.RSAPublicKey:
+		return ssh.NewPublicKey(k.RSAKey())
 	default:
 		return nil, ErrUnsupportedKey
 	}

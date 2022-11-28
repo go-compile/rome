@@ -219,8 +219,8 @@ func (k *RSAPublicKey) Fingerprint(h hash.Hash) []byte {
 }
 
 // ECDSAKey returns the key in ecdsa.PublicKey
-func (k *RSAPublicKey) RSAKey() rsa.PublicKey {
-	return *k.k
+func (k *RSAPublicKey) RSAKey() *rsa.PublicKey {
+	return k.k
 }
 
 // Encrypt uses OAEP RSA. DO NOT PROVIDE A CIPHER, HASH OR OPTIONS

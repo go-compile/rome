@@ -3,6 +3,7 @@ package ssh_test
 import (
 	"testing"
 
+	"github.com/go-compile/rome"
 	"github.com/go-compile/rome/brainpool"
 	"github.com/go-compile/rome/ed25519"
 	"github.com/go-compile/rome/p256"
@@ -122,5 +123,21 @@ func TestUnsupportedEd25519Key(t *testing.T) {
 
 	if len(buf) > 0 {
 		t.Fatal("expected key buf to be empty")
+	}
+}
+
+func TestUnsupportedRSAKey(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	buf, _, err := ssh.ToMarshaledKey(k.Public())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(buf) < 1 {
+		t.Fatal("expected key buf to not be empty")
 	}
 }
