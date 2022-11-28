@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-compile/rome"
+	"golang.org/x/crypto/blake2b"
 )
 
 func TestParsePrivateKeyRSA(t *testing.T) {
@@ -79,5 +80,51 @@ func TestRSADecryptCipherOptions(t *testing.T) {
 	_, err = k.Decrypt(ciphertext, rome.CipherAES_GCM, sha256.New())
 	if err == nil {
 		t.Fatal("expected failure")
+	}
+}
+
+func TestRSAPKCS1v15Sign(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// any hash function will work it just has to be 384 bits
+	digest := blake2b.Sum384([]byte("sign this message"))
+
+	sig, err := k.Sign(digest[:])
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	valid, err := k.Public().Verify(digest[:], sig)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !valid {
+		t.Fatal("signature not valid")
+	}
+}
+
+func TestRSAPKCS1v15SignFail(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// any hash function will work it just has to be 384 bits
+	digest := blake2b.Sum384([]byte("sign this message"))
+
+	sig, err := k.Sign(digest[:])
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	sig[7] = sig[7] + 1
+
+	valid, _ := k.Public().Verify(digest[:], sig)
+	if valid {
+		t.Fatal("signature should be invalid")
 	}
 }

@@ -1,6 +1,7 @@
 package rome
 
 import (
+	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
 	"encoding/pem"
@@ -249,15 +250,20 @@ func (k *RSAKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ..
 }
 
 func (k *RSAPublicKey) DH(hash hash.Hash, g PrivateKey, options ...Option) ([]byte, error) {
-	return nil, nil
+	panic("not implemented on RSA keys")
 }
 
-// Sign will take a digest and use the private key to sign it
+// Sign will take a digest and use the private key to sign it using RSA PKCS1v15
+// BLAKE2b_384
 func (k *RSAKey) Sign(digest []byte) ([]byte, error) {
-	return nil, nil
+	return rsa.SignPKCS1v15(rand.Reader, k.priv, crypto.SHA384, digest)
 }
 
-// Verify will take a ASN.1 signature and return true if it's valid
+// Verify will take a RSA PKCS1v15 signature and return true if it's valid
 func (k *RSAPublicKey) Verify(digest []byte, signature []byte) (bool, error) {
-	return false, nil
+	if err := rsa.VerifyPKCS1v15(k.k, crypto.SHA384, digest, signature); err != nil {
+		return false, nil
+	}
+
+	return true, nil
 }
