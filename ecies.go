@@ -23,7 +23,7 @@ type Cipher uint8
 
 const (
 	// CipherAES_GCM is a AHEAD cipher and is recommended for most use cases
-	CipherAES_GCM = iota
+	CipherAES_GCM = iota + 1
 	// CipherChacha20 is a UNAUTHENTICATED cipher and is only provided with the expectation
 	// you will handle the data integrity by using a MAC. Or instead please use one of the
 	// provided authenticated ChaCha ciphers below.

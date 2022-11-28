@@ -50,3 +50,64 @@ func TestRSAEncrypt(t *testing.T) {
 		t.Fatal("plain text is not equal")
 	}
 }
+
+func TestRSAEncryptCipherOptions(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	_, err = k.RSAPublic().Encrypt(msg, rome.CipherAES_GCM, nil)
+	if err == nil {
+		t.Fatal("expected failure")
+	}
+}
+
+func TestRSAEncryptHashOptions(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	_, err = k.RSAPublic().Encrypt(msg, rome.Cipher(0), sha256.New())
+	if err == nil {
+		t.Fatal("expected failure")
+	}
+}
+
+func TestRSADecryptHashOptions(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	ciphertext, err := k.RSAPublic().Encrypt(msg, rome.Cipher(0), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, err = k.Decrypt(ciphertext, rome.Cipher(0), sha256.New())
+	if err == nil {
+		t.Fatal("expected failure")
+	}
+}
+func TestRSADecryptCipherOptions(t *testing.T) {
+	k, err := rome.GenerateRSA(2048)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	msg := []byte("This is the secret message 123.")
+	ciphertext, err := k.RSAPublic().Encrypt(msg, rome.Cipher(0), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, err = k.Decrypt(ciphertext, rome.CipherAES_GCM, nil)
+	if err == nil {
+		t.Fatal("expected failure")
+	}
+}
