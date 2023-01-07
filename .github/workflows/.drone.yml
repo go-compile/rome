@@ -1,0 +1,32 @@
+---
+kind: pipeline
+name: go-1-18
+
+steps:
+- name: test
+  image: golang:1.18
+  commands:
+  - go test ./...
+  - go build -v ./cmd/localrelay
+
+---
+kind: pipeline
+name: go-1-19
+
+steps:
+- name: test
+  image: golang:1.19
+  commands:
+  - go test ./...
+  - go build -v ./cmd/localrelay
+
+---
+kind: pipeline
+name: osv-dependency-scan
+
+steps:
+- name: osv-vuln-dep-scanner
+  image: golang
+  commands:
+  - go install github.com/google/osv-scanner/cmd/osv-scanner@v1
+  - osv-scanner -r ./
