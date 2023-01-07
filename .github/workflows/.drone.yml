@@ -7,7 +7,6 @@ steps:
   image: golang:1.18
   commands:
   - go test ./...
-  - go build -v ./cmd/localrelay
 
 ---
 kind: pipeline
@@ -18,7 +17,6 @@ steps:
   image: golang:1.19
   commands:
   - go test ./...
-  - go build -v ./cmd/localrelay
 
 ---
 kind: pipeline
