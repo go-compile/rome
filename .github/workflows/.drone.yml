@@ -18,6 +18,12 @@ steps:
   commands:
   - go test ./...
 
+- name: go-cover
+  image: golang:1.19
+  commands:
+  - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
+  - go tool cover -func ./coverage.out
+
 ---
 kind: pipeline
 name: osv-dependency-scan
