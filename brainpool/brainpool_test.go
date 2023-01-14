@@ -98,6 +98,7 @@ func TestP256t1(t *testing.T) {
 	parsePubVerify(t, key)
 	ECIES(t, key)
 }
+
 func TestP320r1(t *testing.T) {
 	key, err := brainpool.GenerateP320r1()
 	if err != nil {
@@ -108,6 +109,7 @@ func TestP320r1(t *testing.T) {
 	parsePubVerify(t, key)
 	ECIES(t, key)
 }
+
 func TestP320t1(t *testing.T) {
 	key, err := brainpool.GenerateP320t1()
 	if err != nil {
@@ -129,6 +131,7 @@ func TestP384r1(t *testing.T) {
 	parsePubVerify(t, key)
 	ECIES(t, key)
 }
+
 func TestP384t1(t *testing.T) {
 	key, err := brainpool.GenerateP384t1()
 	if err != nil {
@@ -150,6 +153,7 @@ func TestP512r1(t *testing.T) {
 	parsePubVerify(t, key)
 	ECIES(t, key)
 }
+
 func TestP512t1(t *testing.T) {
 	key, err := brainpool.GenerateP512t1()
 	if err != nil {
@@ -162,7 +166,6 @@ func TestP512t1(t *testing.T) {
 }
 
 func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
-
 	p, err := key.Private()
 	if err != nil {
 		t.Fatal(err)
@@ -182,7 +185,6 @@ func parsePrivateKey(t *testing.T, key rome.PrivateKey) {
 }
 
 func parsePubVerify(t *testing.T, key rome.PrivateKey) {
-
 	m := "This is a important message which must be authenticated."
 	h := sha256.New()
 	h.Write([]byte(m))

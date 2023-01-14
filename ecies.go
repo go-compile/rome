@@ -56,7 +56,6 @@ var (
 // Encrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
 // algorithm and hash is used to derive the key via the ECDH
 func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
-
 	// generate ephemeral key to perform ECDH
 	// it is important this key is never used again
 	k2, err := k.generateEphemeralKey()
@@ -192,7 +191,6 @@ func (k *ECPublicKey) Encrypt(m []byte, c Cipher, hash hash.Hash, options ...Opt
 // Decrypt uses ECIES hybrid encryption. Cipher is used to specify the encryption
 // algorithm and hash is used to derive the key via the ECDH
 func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...Option) ([]byte, error) {
-
 	// unmarshal ASN.1 der bytes to get length
 	var pub pkixPublicKey
 	rest, err := asn1.Unmarshal(ciphertext, &pub)
@@ -332,7 +330,6 @@ func (k *ECKey) Decrypt(ciphertext []byte, c Cipher, hash hash.Hash, options ...
 
 // generateEphemeralKey will generate a temporary key on the same curve
 func (k *ECPublicKey) generateEphemeralKey() (*ECKey, error) {
-
 	k2, err := ecdsa.GenerateKey(k.ecdsa.Curve, rand.Reader)
 	if err != nil {
 		return nil, err

@@ -35,6 +35,7 @@ func TestP384SSH(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
 func TestP521SSH(t *testing.T) {
 	k, err := p521.Generate()
 	if err != nil {
@@ -110,6 +111,7 @@ func TestUnsupportedBrainpoolKey(t *testing.T) {
 		t.Fatal("expected key buf to be empty")
 	}
 }
+
 func TestUnsupportedEd25519Key(t *testing.T) {
 	k, err := ed25519.Generate()
 	if err != nil {

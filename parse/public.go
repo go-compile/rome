@@ -15,7 +15,6 @@ import (
 
 // Public takes input as a PEM encoded ASN.1 DER bytes public key
 func Public(pemPub []byte) (rome.PublicKey, error) {
-
 	p, _ := pem.Decode(pemPub)
 	if p == nil {
 		return nil, rome.ErrInvalidPem
@@ -43,7 +42,6 @@ func Public(pemPub []byte) (rome.PublicKey, error) {
 
 // PublicASN1 takes input as a ASN.1 DER bytes public key
 func PublicASN1(derBytes []byte) (rome.PublicKey, error) {
-
 	pub, err := derbytes.ParsePKIXPublicKey(derBytes)
 	if err != nil {
 		return nil, err

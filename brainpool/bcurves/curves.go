@@ -97,7 +97,6 @@ func initP320t1() {
 	p320t1.Gy, _ = new(big.Int).SetString("63BA3A7A27483EBF6671DBEF7ABB30EBEE084E58A0B077AD42A5A0989D1EE71B1B9BC0455FB0D2C3", 16)
 	p320t1.BitSize = 320
 	p320t1.Name = "P320t1"
-
 }
 
 func initP384t1() {
@@ -210,6 +209,7 @@ func P512t1() elliptic.Curve {
 	oncet.Do(inittcurves)
 	return &p512t1
 }
+
 func P160r1() elliptic.Curve {
 	oncer.Do(initrcurves)
 	return p160r1

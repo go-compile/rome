@@ -14,7 +14,6 @@ import (
 
 // Private takes input as a PEM encoded ASN.1 DER bytes private key
 func Private(pemPub []byte) (rome.PrivateKey, error) {
-
 	p, _ := pem.Decode(pemPub)
 	if p == nil {
 		return nil, rome.ErrInvalidPem
@@ -42,7 +41,6 @@ func Private(pemPub []byte) (rome.PrivateKey, error) {
 
 // PrivateASN1 takes input as a ASN.1 DER bytes private key
 func PrivateASN1(derBytes []byte) (rome.PrivateKey, error) {
-
 	priv, err := derbytes.ParsePKCS8PrivateKey(derBytes)
 	if err != nil {
 		if err == derbytes.ErrUseECParseInstead {

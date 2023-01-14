@@ -11,7 +11,6 @@ import (
 // DH calculates a ECDH using your specified hash function for
 // key generation
 func (k *ECPublicKey) DH(hash hash.Hash, g PrivateKey, options ...Option) ([]byte, error) {
-
 	// calculate shared secret
 	x, y := k.ecdsa.ScalarMult(k.ecdsa.X, k.ecdsa.Y, g.PrivateRaw())
 

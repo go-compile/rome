@@ -23,7 +23,6 @@ type Argon2id struct {
 // It uses Argon2's recommended defaults. if you want to use custom
 // argon parameters use argon2.New()
 func ID(salt []byte) hash.Hash {
-
 	h := &Argon2id{
 		buf:  bytes.NewBuffer(nil),
 		salt: salt,

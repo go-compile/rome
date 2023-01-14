@@ -8,7 +8,6 @@ import (
 
 // Generate will create a new Ed25519 edward curve public/private key pair
 func Generate() (*EdKey, error) {
-
 	pub, priv, err := ed448.GenerateKey(rand.Reader)
 	if err != nil {
 		return nil, err

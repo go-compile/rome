@@ -31,7 +31,6 @@ func TestECKeySize(t *testing.T) {
 	if size := key.Public().Size(); size != 66 {
 		t.Fatal("unexpected size:", size)
 	}
-
 }
 
 // Generate will create a new nist-P521 elliptic curve public/private key pair

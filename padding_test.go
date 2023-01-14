@@ -15,6 +15,7 @@ func TestPadding(t *testing.T) {
 		}
 	}
 }
+
 func TestKeyPaddingP521(t *testing.T) {
 	for i := 1; i <= 500; i++ {
 		k, err := generate()

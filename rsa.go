@@ -13,11 +13,9 @@ import (
 	"github.com/go-compile/rome/derbytes"
 )
 
-var (
-	// ErrOptionsNotSupported is returned when options are used on a function which
-	// does not support it.
-	ErrOptionsNotSupported = errors.New("encryption options are not supported for this key")
-)
+// ErrOptionsNotSupported is returned when options are used on a function which
+// does not support it.
+var ErrOptionsNotSupported = errors.New("encryption options are not supported for this key")
 
 // RSAKey is a RSA private key
 type RSAKey struct {

@@ -8,9 +8,7 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-var (
-	bobPrivate rome.PrivateKey
-)
+var bobPrivate rome.PrivateKey
 
 func main() {
 	// Both Alice and Bob are separated in this code example,

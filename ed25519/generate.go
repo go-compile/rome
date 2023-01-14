@@ -1,9 +1,8 @@
 package ed25519
 
 import (
-	"crypto/rand"
-
 	"crypto/ed25519"
+	"crypto/rand"
 )
 
 // Generate will create a new Ed25519 edward curve public/private key pair

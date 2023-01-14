@@ -39,10 +39,8 @@ type ecPrivateKey struct {
 	PublicKey     asn1.BitString        `asn1:"optional,explicit,tag:1"`
 }
 
-var (
-	// ErrUseECParseInstead is returned if parsing a private key in the wrong function
-	ErrUseECParseInstead = errors.New("x509: failed to parse private key (use ParseECPrivateKey instead for this key format)")
-)
+// ErrUseECParseInstead is returned if parsing a private key in the wrong function
+var ErrUseECParseInstead = errors.New("x509: failed to parse private key (use ParseECPrivateKey instead for this key format)")
 
 // ParseECPrivateKey parses an EC private key in SEC 1, ASN.1 DER form.
 //
