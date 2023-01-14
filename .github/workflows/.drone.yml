@@ -1,5 +1,6 @@
 ---
 kind: pipeline
+type: docker
 name: go-1-18
 
 steps:
@@ -10,27 +11,42 @@ steps:
 
 ---
 kind: pipeline
+type: docker
 name: go-1-19
 
 steps:
 - name: test
   image: golang:1.19
+  volumes:
+    - name: deps
+      path: /go
   commands:
   - go test ./...
 
 - name: go-cover
   image: golang:1.19
+  volumes:
+    - name: deps
+      path: /go
   commands:
   - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
   - go tool cover -func ./coverage.out
 
 ---
 kind: pipeline
+type: docker
 name: osv-dependency-scan
 
 steps:
 - name: osv-vuln-dep-scanner
   image: golang
+  volumes:
+    - name: deps
+      path: /go
   commands:
   - go install github.com/google/osv-scanner/cmd/osv-scanner@v1
   - osv-scanner -r ./
+
+volumes:
+  - name: deps
+    temp: {}
