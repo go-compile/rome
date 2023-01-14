@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: go-1-18
+name: go-1-18-test
 
 steps:
 - name: test
@@ -36,13 +36,7 @@ steps:
   - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
   - go tool cover -func ./coverage.out
 
----
-kind: pipeline
-type: docker
-name: osv-dependency-scan
-
-steps:
-- name: osv-vuln-dep-scanner
+- name: osv-dependency-scan
   image: golang
   volumes:
     - name: deps
