@@ -4,10 +4,21 @@ type: docker
 name: go-1-18-test
 
 steps:
-- name: test
-  image: golang:1.18
-  commands:
-  - go test ./...
+  - name: test
+    image: golang:1.18
+    commands:
+      - go test ./...
+
+  - name: build-failed-notification
+    image: curlimages/curl:8.00.1
+    environment:
+      notify:
+        from_secret: notification_webhook
+    when:
+      status:
+        - failure
+    commands:
+      - "curl -v $notify -F 'title=Build Failed: ${DRONE_REPO}' -F $'message=[Build Failed] ${DRONE_REPO}\n[COMMIT] ${DRONE_COMMIT}\n[BRANCH] ${DRONE_BRANCH}\n'"
 
 ---
 kind: pipeline
@@ -19,28 +30,39 @@ volumes:
     temp: {}
 
 steps:
-- name: test
-  image: golang:1.19
-  volumes:
-    - name: deps
-      path: /go
-  commands:
-  - go test ./...
+  - name: test
+    image: golang:1.19
+    volumes:
+      - name: deps
+        path: /go
+    commands:
+      - go test ./...
 
-- name: go-cover
-  image: golang:1.19
-  volumes:
-    - name: deps
-      path: /go
-  commands:
-  - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
-  - go tool cover -func ./coverage.out
+  - name: go-cover
+    image: golang:1.19
+    volumes:
+      - name: deps
+        path: /go
+    commands:
+      - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
+      - go tool cover -func ./coverage.out
 
-- name: osv-dependency-scan
-  image: golang
-  volumes:
-    - name: deps
-      path: /go
-  commands:
-  - go install github.com/google/osv-scanner/cmd/osv-scanner@v1
-  - osv-scanner -r ./
+  - name: osv-dependency-scan
+    image: golang
+    volumes:
+      - name: deps
+        path: /go
+    commands:
+      - go install github.com/google/osv-scanner/cmd/osv-scanner@v1
+      - osv-scanner -r ./
+
+  - name: build-failed-notification
+    image: curlimages/curl:8.00.1
+    environment:
+      notify:
+        from_secret: notification_webhook
+    when:
+      status:
+        - failure
+    commands:
+      - "curl -v $notify -F 'title=Build Failed: ${DRONE_REPO}' -F $'message=[Build Failed] ${DRONE_REPO}\n[COMMIT] ${DRONE_COMMIT}\n[BRANCH] ${DRONE_BRANCH}\n'"
