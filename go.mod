@@ -3,8 +3,8 @@ module github.com/go-compile/rome
 go 1.18
 
 require (
-	github.com/cloudflare/circl v1.3.3
-	golang.org/x/crypto v0.3.1-0.20221117191849-2c476679df9a
+	github.com/cloudflare/circl v1.3.7
+	golang.org/x/crypto v0.18.0
 )
 
-require golang.org/x/sys v0.3.0 // indirect
+require golang.org/x/sys v0.16.0 // indirect
