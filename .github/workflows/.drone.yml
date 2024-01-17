@@ -47,22 +47,13 @@ steps:
       - go test ./...  -coverpkg=./... -coverprofile ./coverage.out
       - go tool cover -func ./coverage.out
 
-  - name: osv-dependency-scan
-    image: golang
-    volumes:
-      - name: deps
-        path: /go
-    commands:
-      - go install github.com/google/osv-scanner/cmd/osv-scanner@v1
-      - osv-scanner -r ./
+---
+kind: pipeline
+type: docker
+name: osv-dependency-scan
 
-  - name: build-failed-notification
-    image: curlimages/curl:8.00.1
-    environment:
-      notify:
-        from_secret: notification_webhook
-    when:
-      status:
-        - failure
+steps:
+  - name: osv-vuln-dep-scanner
+    image: ghcr.io/google/osv-scanner:latest
     commands:
-      - "curl -v $notify -F 'title=Build Failed: ${DRONE_REPO}' -F $'message=[Build Failed] ${DRONE_REPO}\n[COMMIT] ${DRONE_COMMIT}\n[BRANCH] ${DRONE_BRANCH}\n'"
+      - /osv-scanner -r ./
